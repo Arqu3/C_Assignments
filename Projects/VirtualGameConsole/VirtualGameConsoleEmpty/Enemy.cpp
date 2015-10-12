@@ -1,0 +1,99 @@
+#include "Enemy.h"
+#include <string>
+#include <algorithm>
+#include "Bullet.h"
+
+using namespace std;
+
+static const int speed = 2;
+
+static string fileName = "Invader.png";
+static VGCImage image;
+
+static int width;
+static int height;
+
+Enemy::Enemy(VGCVector Position, VGCRectangle Rectangle, int WDirection, float BulletCD)
+{
+	mPosition = Position;
+	mRectangle = Rectangle;
+	mDirection = WDirection;
+	mBulletCD = BulletCD;
+}
+
+Enemy::~Enemy()
+{
+}
+
+void Enemy::update()
+{
+	width = VGCDisplay::getWidth(image);
+	height = VGCDisplay::getHeight(image);
+
+	int x = mPosition.getX();
+	int y = mPosition.getY();
+
+	//Change  X-direction if at the edge of screen
+	if (x > VGCDisplay::getWidth() - width / 2)
+	{
+		mDirection = 0;
+	}
+	if (x < 0 + width / 2)
+	{
+		mDirection = 1;
+	}
+
+	if (mDirection == 0)
+	{
+		x -= speed;
+	}
+	else
+	{
+		x += speed;
+	}
+	y += speed;
+
+	//Set position
+	mPosition.setX(x);
+	mPosition.setY(y);
+
+	//Set rectangle
+	mRectangle.setPosition(mPosition);
+	mRectangle.setHeight(height);
+	mRectangle.setWidth(width);
+
+	visibilityCheck();
+
+	//Bullet CD
+	mBulletCD++;
+	if (mBulletCD >= 15.0f)
+	{
+		mBulletCD = 0.0f;
+	}
+}
+
+void Enemy::render()
+{
+	VGCVector index(0, 0);
+	VGCAdjustment adjustment(0.5, 0.5);
+	VGCDisplay::renderImage(image, index, mPosition, adjustment);
+}
+
+void Enemy::initialize()
+{
+	image = VGCDisplay::openImage(fileName, 1, 1);
+}
+
+void Enemy::finalize()
+{
+	VGCDisplay::closeImage(image);
+}
+
+void Enemy::visibilityCheck()
+{
+	//If outside lower screen boundary, set to not alive
+	if (mPosition.getY() > VGCDisplay::getHeight())
+	{
+		mIsVisible = false;
+	}
+}

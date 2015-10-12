@@ -1,0 +1,58 @@
+﻿Build started 14/09/2015 17:14:01.
+     1>Project "C:\Users\Ludwig\Documents\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt VGCAdjustment.cpp VGCAssert.cpp VGCBootstrap.cpp VGCBus.cpp VGCClock.cpp VGCColor.cpp VGCDisplay.cpp VGCError.cpp VGCFontImp.cpp VGCGDIPlus.cpp VGCHandler.cpp VGCImageImp.cpp VGCKey.cpp VGCKeyboard.cpp VGCMessage.cpp VGCRandomizer.cpp VGCRectangle.cpp VGCReferenced.cpp VGCTimerImp.cpp VGCVector.cpp VGCVirtualGameConsole.cpp VGCWindow.cpp
+         VGCWindow.cpp
+         VGCVirtualGameConsole.cpp
+         VGCVector.cpp
+         VGCTimerImp.cpp
+         VGCReferenced.cpp
+         VGCRectangle.cpp
+         VGCRandomizer.cpp
+         VGCMessage.cpp
+         VGCKeyboard.cpp
+         VGCKey.cpp
+         VGCImageImp.cpp
+         VGCHandler.cpp
+         VGCGDIPlus.cpp
+         VGCFontImp.cpp
+         VGCError.cpp
+         VGCDisplay.cpp
+         VGCColor.cpp
+         VGCClock.cpp
+         VGCBus.cpp
+         VGCBootstrap.cpp
+         Generating Code...
+         Compiling...
+         VGCAssert.cpp
+         VGCAdjustment.cpp
+         Generating Code...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Debug\VirtualGameConsole.lib" /NOLOGO Debug\VGCAdjustment.obj
+         Debug\VGCAssert.obj
+         Debug\VGCBootstrap.obj
+         Debug\VGCBus.obj
+         Debug\VGCClock.obj
+         Debug\VGCColor.obj
+         Debug\VGCDisplay.obj
+         Debug\VGCError.obj
+         Debug\VGCFontImp.obj
+         Debug\VGCGDIPlus.obj
+         Debug\VGCHandler.obj
+         Debug\VGCImageImp.obj
+         Debug\VGCKey.obj
+         Debug\VGCKeyboard.obj
+         Debug\VGCMessage.obj
+         Debug\VGCRandomizer.obj
+         Debug\VGCRectangle.obj
+         Debug\VGCReferenced.obj
+         Debug\VGCTimerImp.obj
+         Debug\VGCVector.obj
+         Debug\VGCVirtualGameConsole.obj
+         Debug\VGCWindow.obj
+         VirtualGameConsole.vcxproj -> C:\Users\Ludwig\Documents\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
+     1>Done Building Project "C:\Users\Ludwig\Documents\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:10.75
