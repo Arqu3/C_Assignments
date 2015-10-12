@@ -5,10 +5,10 @@ using namespace std;
 static VGCImage image;
 static string fileName = "Explosion.png";
 
-Explosion::Explosion(VGCVector Position, float Timer)
+Explosion::Explosion(VGCVector Position, float Timer) :
+	mPosition(Position),
+	mTimer(Timer)
 {
-	mPosition = Position;
-	mTimer = Timer;
 }
 
 Explosion::~Explosion()

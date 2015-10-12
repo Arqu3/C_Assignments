@@ -12,6 +12,9 @@ public:
 	virtual void render() = 0;
 	bool mIsAlive = true;
 	VGCRectangle mRectangle;
+
+	//typedef std::vector<Bullet&> BulletVector;
+	//BulletVector mBullets;
 };
 
 #endif

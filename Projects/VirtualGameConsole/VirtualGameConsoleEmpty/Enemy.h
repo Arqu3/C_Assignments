@@ -11,16 +11,16 @@ public:
 	~Enemy();
 	virtual void update();
 	virtual void render();
-	virtual void visibilityCheck();
+	virtual bool visibilityCheck();
 	static void initialize();
 	static void finalize();
 
-	bool mIsVisible = true;
-	float mBulletCD = 0.0f;
+	float mBulletCD;
 	VGCVector mPosition;
 
 private:
-	int mDirection = 1;
+	int mDirection;
+	bool mIsVisible;
 };
 
 #endif

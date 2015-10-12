@@ -22,9 +22,11 @@ private:
 	void render();
 	void addEnemies();
 	void destroy();
+	void handleStates();
+	void menuHandler();
+	void loadShip();
 
 	typedef std::vector<Entity*> EntityVector;
-	EntityVector mEntities;
 
 	EntityVector mEProjectiles;
 
@@ -33,6 +35,17 @@ private:
 
 	typedef std::vector<Explosion*> ExplosionVector;
 	ExplosionVector mExplosions;
+
+	enum GameState
+	{
+		InGame,
+		Paused,
+		Menu,
+		Over
+	};
+	GameState mCurrentState;
+	bool isPaused;
+	bool endGame;
 };
 
 #endif

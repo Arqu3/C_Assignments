@@ -21,7 +21,10 @@ const VGCVector healthTPosition(0, 0);
 const VGCAdjustment healthTAdjustment(0.0, 0.0);
 
 Ship::Ship() :
-	mPosition(VGCDisplay::getWidth() / 2, VGCDisplay::getHeight() / 2)
+	mPosition(VGCDisplay::getWidth() / 2, VGCDisplay::getHeight() / 2),
+	mHealth(100),
+	mScore(0),
+	mBulletCD(0.0f)
 {
 }
 
@@ -129,8 +132,16 @@ void Ship::setRectangle()
 
 void Ship::addBullet()
 {
+	//Middle
+	//mBullets.push_back(Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, -1)));
 	Projectiles.push_back(new Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, -1)));
+	
+	//Right
+	//mBullets.push_back(Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(1, -1)));
 	Projectiles.push_back(new Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(1, -1)));
+	
+	//Left
+	//mBullets.push_back(Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(-1, -1)));
 	Projectiles.push_back(new Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(-1, -1)));
 }
 
@@ -146,6 +157,17 @@ void Ship::updateBullet()
 			Projectiles.erase(std::remove(Projectiles.begin(), Projectiles.end(), Projectiles[i]), Projectiles.end());
 		}
 	}
+	//for (BulletVector::size_type i = 0; i < mBullets.size(); i++)
+	//{
+	//	mBullets[i].update();
+
+	//	//Removes bullets if not visible
+	//	if (mBullets[i].mIsAlive == false)
+	//	{
+	//		//Projectiles.erase(std::remove(Projectiles.begin(), Projectiles.end(), Projectiles[i]), Projectiles.end());
+	//		mBullets.erase(std::remove(mBullets.begin(), mBullets.end(), mBullets[i]), mBullets.end());
+	//	}
+	//}
 }
 
 void Ship::render()
@@ -160,11 +182,16 @@ void Ship::render()
 
 void Ship::renderBullet()
 {
-	//Render projectiles
+	////Render projectiles
 	for (EntityVector::size_type i = 0; i < Projectiles.size(); i++)
 	{
 		Projectiles[i]->render();
 	}
+	//Render projectiles
+	//for (BulletVector::size_type i = 0; i < mBullets.size(); i++)
+	//{
+	//	mBullets[i].render();
+	//}
 }
 
 void Ship::renderText()

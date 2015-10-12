@@ -18,11 +18,12 @@ Ship *ship;
 int countE = 5;
 float spawnTimer = 0.0f;
 
-Game::Game() : 
-	mEntities()
+Game::Game() :
+	mCurrentState(Menu),
+	isPaused(false),
+	endGame(false)
 {
 	VGCVirtualGameConsole::initialize(name, width, height);
-	ship = new Ship();
 	Ship::initialize();
 	Bullet::initialize();
 	Enemy::initialize();
@@ -44,7 +45,7 @@ void Game::start()
 	//Open timer
 	VGCTimer timer = VGCClock::openTimer(updateT);
 
-	while (!VGCKeyboard::wasPressed(VGCKey(VGCKey::ESCAPE_KEY)) && ship->isAlive() && VGCVirtualGameConsole::beginLoop())
+	while (endGame == false && VGCVirtualGameConsole::beginLoop())
 	{
 		//Update objects
 		VGCClock::reset(timer);
@@ -54,11 +55,34 @@ void Game::start()
 			VGCColor backgroundColor(255, 0, 0, 0);
 			VGCDisplay::clear(backgroundColor);
 
-			//Render objects
-			render();
+			handleStates();
+			menuHandler();
 
-			//Update entities
-			update();
+			switch (mCurrentState)
+			{
+			case Menu:
+				//Insert Menu rendering
+				break;
+
+			case InGame:
+				//Update entities
+				update();
+				break;
+
+			case Paused:
+				//Insert Pause rendering
+				break;
+
+			case Over:
+				//Insert Game over rendering
+				break;
+			}
+
+			//Render objects while not in the main menu
+			if (mCurrentState != Menu)
+			{
+				render();
+			}
 
 			VGCDisplay::endFrame();
 		}
@@ -68,6 +92,79 @@ void Game::start()
 
 	VGCClock::closeTimer(timer);
 	destroy();
+}
+
+void Game::handleStates()
+{
+	//Update only if player is alive
+	if (mCurrentState == InGame)
+	{
+		if (!ship->isAlive())
+		{
+			mCurrentState = Over;
+		}
+	}
+
+	if (mCurrentState == Over)
+	{
+		//Exit to menu when pressing escape
+		if (VGCKeyboard::wasPressed(VGCKey::Q_KEY))
+		{
+			mCurrentState = Menu;
+		}
+		//Reload game when pressing R
+		if (VGCKeyboard::wasPressed(VGCKey::R_KEY))
+		{
+			destroy();
+			loadShip();
+			mCurrentState = InGame;
+		}
+	}
+
+	//Toggle game pause
+	if (mCurrentState == Paused || mCurrentState == InGame)
+	{
+		//Can only toggle if InGame or Paused
+		if (VGCKeyboard::wasPressed(VGCKey::ESCAPE_KEY))
+		{
+			isPaused = !isPaused;
+		}
+		//Switch states
+		if (isPaused == true)
+		{
+			mCurrentState = Paused;
+		}
+		else
+		{
+			mCurrentState = InGame;
+		}
+	}
+
+}
+
+void Game::menuHandler()
+{
+	if (mCurrentState == Menu)
+	{
+		//Start game when pressing Enter
+		if (VGCKeyboard::wasPressed(VGCKey::RETURN_KEY))
+		{
+			destroy();
+			loadShip();
+			mCurrentState = InGame;
+		}
+		//Close program when pressing Escape
+		if (VGCKeyboard::wasPressed(VGCKey::ESCAPE_KEY))
+		{
+			endGame = true;
+		}
+	}
+
+}
+
+void Game::loadShip()
+{
+	ship = new Ship();
 }
 
 void Game::update()
@@ -96,7 +193,9 @@ void Game::update()
 
 		if (ship->mRectangle.isInside(mEnemies[j]->mRectangle.getPosition()))
 		{
+			//Remove enemy and player health if player and enemy collide
 			ship->mHealth -= 10;
+			mExplosions.push_back(new Explosion(mEnemies[j]->mPosition, 30));
 			mEnemies[j]->mIsAlive = false;
 		}
 
@@ -113,7 +212,7 @@ void Game::update()
 			mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
 			break;
 		}
-		if (mEnemies[j]->mIsVisible == false)
+		if (!mEnemies[j]->visibilityCheck())
 		{
 			//If enemy is outside screen, remove it
 			mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());

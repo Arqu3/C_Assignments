@@ -13,12 +13,13 @@ static VGCImage image;
 static int width;
 static int height;
 
-Enemy::Enemy(VGCVector Position, VGCRectangle Rectangle, int WDirection, float BulletCD)
+Enemy::Enemy(VGCVector Position, VGCRectangle Rectangle, int WDirection, float BulletCD) :
+	mPosition(Position),
+	mDirection(WDirection),
+	mBulletCD(BulletCD),
+	mIsVisible(true)
 {
-	mPosition = Position;
 	mRectangle = Rectangle;
-	mDirection = WDirection;
-	mBulletCD = BulletCD;
 }
 
 Enemy::~Enemy()
@@ -89,11 +90,16 @@ void Enemy::finalize()
 	VGCDisplay::closeImage(image);
 }
 
-void Enemy::visibilityCheck()
+bool Enemy::visibilityCheck()
 {
 	//If outside lower screen boundary, set to not alive
 	if (mPosition.getY() > VGCDisplay::getHeight())
 	{
 		mIsVisible = false;
 	}
+	else
+	{
+		mIsVisible = true;
+	}
+	return mIsVisible;
 }

@@ -5,14 +5,14 @@ using namespace std;
 
 static const int speed = 6;
 
-string fileName = "Bullet.png";
+static string fileName = "Bullet.png";
 static VGCImage image;
 
-Bullet::Bullet(VGCVector Position, VGCRectangle Rectangle, VGCVector Direction)
+Bullet::Bullet(VGCVector Position, VGCRectangle Rectangle, VGCVector Direction) :
+	mPosition(Position),
+	mDirection(Direction)
 {
-	mPosition = Position;
 	mRectangle = Rectangle;
-	mDirection = Direction;
 }
 
 
@@ -26,8 +26,14 @@ void Bullet::update()
 	int x = mPosition.getX();
 
 	//Clamp movement to speed max value, add positive/negative direction when added, not speed
-	y += clamp(speed * mDirection.getY(), -speed, speed);
-	x += clamp(speed * mDirection.getX(), -speed, speed);
+	if (mDirection.getY() != 0)
+	{
+		y += clamp(speed * mDirection.getY(), -speed, speed);
+	}
+	if (mDirection.getX() != 0)
+	{
+		x += clamp(speed * mDirection.getX(), -speed / 3, speed / 3);
+	}
 
 	//Set position
 	mPosition.setY(y);
