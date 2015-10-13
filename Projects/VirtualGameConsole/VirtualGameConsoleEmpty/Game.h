@@ -9,6 +9,7 @@
 #include "Bullet.h"
 #include "Enemy.h"
 #include "Explosion.h"
+#include "Menu.h"
 
 class Game
 {
@@ -40,7 +41,7 @@ private:
 	{
 		InGame,
 		Paused,
-		Menu,
+		MainMenu,
 		Over
 	};
 	GameState mCurrentState;

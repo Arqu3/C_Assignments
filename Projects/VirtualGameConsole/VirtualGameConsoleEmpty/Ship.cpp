@@ -197,7 +197,7 @@ void Ship::renderBullet()
 void Ship::renderText()
 {
 	//Open font
-	const int fontSize = 30;
+	static const int fontSize = 30;
 	VGCFont font = VGCDisplay::openFont("Arial", fontSize);
 
 	//Render text

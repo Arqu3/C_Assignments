@@ -14,12 +14,15 @@ static const double updateT = 1.0 / FPS;
 //Ship reference
 Ship *ship;
 
+//Menu reference
+Menu *menu;
+
 //Enemy
 int countE = 5;
 float spawnTimer = 0.0f;
 
 Game::Game() :
-	mCurrentState(Menu),
+	mCurrentState(MainMenu),
 	isPaused(false),
 	endGame(false)
 {
@@ -28,6 +31,7 @@ Game::Game() :
 	Bullet::initialize();
 	Enemy::initialize();
 	Explosion::initialize();
+	menu = new Menu();
 }
 
 
@@ -58,10 +62,18 @@ void Game::start()
 			handleStates();
 			menuHandler();
 
+			//Render objects while not in the main menu
+			if (mCurrentState != MainMenu)
+			{
+				render();
+			}
+			menu->update();
+
 			switch (mCurrentState)
 			{
-			case Menu:
+			case MainMenu:
 				//Insert Menu rendering
+				menu->renderMainMenu();
 				break;
 
 			case InGame:
@@ -71,17 +83,13 @@ void Game::start()
 
 			case Paused:
 				//Insert Pause rendering
+				menu->renderPause();
 				break;
 
 			case Over:
 				//Insert Game over rendering
+				menu->renderGameOver();
 				break;
-			}
-
-			//Render objects while not in the main menu
-			if (mCurrentState != Menu)
-			{
-				render();
 			}
 
 			VGCDisplay::endFrame();
@@ -110,7 +118,7 @@ void Game::handleStates()
 		//Exit to menu when pressing escape
 		if (VGCKeyboard::wasPressed(VGCKey::Q_KEY))
 		{
-			mCurrentState = Menu;
+			mCurrentState = MainMenu;
 		}
 		//Reload game when pressing R
 		if (VGCKeyboard::wasPressed(VGCKey::R_KEY))
@@ -144,7 +152,7 @@ void Game::handleStates()
 
 void Game::menuHandler()
 {
-	if (mCurrentState == Menu)
+	if (mCurrentState == MainMenu)
 	{
 		//Start game when pressing Enter
 		if (VGCKeyboard::wasPressed(VGCKey::RETURN_KEY))
@@ -165,6 +173,7 @@ void Game::menuHandler()
 void Game::loadShip()
 {
 	ship = new Ship();
+	menu = new Menu();
 }
 
 void Game::update()
@@ -296,6 +305,7 @@ void Game::destroy()
 {
 	//Remove all objects before closing application
 	delete ship;
+	delete menu;
 	while (!mEnemies.empty())
 	{
 		delete mEnemies.back();
