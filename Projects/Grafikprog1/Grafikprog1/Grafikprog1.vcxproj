@@ -84,15 +84,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Datorgrafik deluppg 2\Datorgrafik.cpp" />
-    <ClCompile Include="..\..\..\..\Datorgrafik deluppg 2\Support.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\..\Datorgrafik deluppg 2\Support.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\Debug\RockyPlanet2.png" />
     <Image Include="..\Debug\Sun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Debug\Datorgrafik.cpp" />
+    <ClCompile Include="..\Debug\Support.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Debug\Support.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
