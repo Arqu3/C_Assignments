@@ -21,6 +21,9 @@ struct Shared
 	Camera camera;
 	GLUquadric *quadric;
 	bool isOrbit = true;
+	bool isRoll = false;
+	bool isMovement = false;
+	int mode = 1;
 };
 
 struct Shared shared;
@@ -122,6 +125,7 @@ void drawPolyObject()
 {
 	glPushMatrix();
 	//Förflytta X mha cos
+	glTranslatef(0, 15, 0);
 	glTranslatef(15 * cos(shared.time), 0, 0);
 
 	//Rita ut objektet från deluppg 1 mha indexlista
@@ -145,9 +149,8 @@ void drawPolyObject()
 void drawSphere()
 {
 	glPushMatrix();
-	glTranslatef(-10 * cos(shared.time), 5 * sin(shared.time), 0);
 
-	glColor3f(1, 1, 1);
+	glTranslatef(-10 * cos(shared.time), 5 * sin(shared.time), 0);
 
 	glBindTexture(GL_TEXTURE_2D, shared.earthTexture);
 	gluSphere(shared.quadric, 5, 32, 32);
@@ -165,13 +168,13 @@ void drawScene()
 	glDisable(GL_BLEND);
 	glPolygonMode(GL_FRONT, GL_FILL);
 
-	// Rita golv och pelare
-	drawFloor(shared.floorTexture);
-	drawPillars(shared.pillarTexture);
-
 	drawSphere();
 
 	drawPolyObject();
+
+	// Rita golv och pelare
+	drawFloor(shared.floorTexture);
+	drawPillars(shared.pillarTexture);
 }
 
 
@@ -187,8 +190,36 @@ void keyboard(unsigned char key, int x, int y)
 		shared.pause = !shared.pause;
 		break;
 
-	case 'a':
+	case 'e':
 		shared.isOrbit = !shared.isOrbit;
+		break;
+
+	case 'r':
+		shared.isRoll = !shared.isRoll;
+		break;
+
+	case 'w':
+		shared.isMovement = !shared.isMovement;
+		break;
+
+	//Förflyttningslägen
+	case '1':
+		shared.mode = 1;
+		break;
+	case '2':
+		shared.mode = 2;
+		break;
+	case '3':
+		shared.mode = 3;
+		break;
+	case '4':
+		shared.mode = 4;
+		break;
+	case '5':
+		shared.mode = 5;
+		break;
+	case '6':
+		shared.mode = 6;
 		break;
 	}
 }
@@ -231,9 +262,15 @@ void display()
 	glEnable(GL_DEPTH_TEST);
 
 	glMatrixMode(GL_MODELVIEW);
+	
 	glLoadIdentity();
+	glViewport(0, 0, 325, 250);
 	shared.camera.lookAt();   // Skapar vymatris via kameraklassen
+	drawScene();
 
+	glLoadIdentity();
+	glViewport(325, 250, 325, 250);
+	gluLookAt(-60, 0, 0, 0, 0, 0, 0, 1, 0);
 	drawScene();
 
 	glutSwapBuffers();
@@ -275,17 +312,65 @@ void passiveMotion(int x, int y)
 		float scale = 0.3f;
 		float deltaX = float(x - centerX) * scale;
 		float deltaY = float(y - centerY) * scale;
+
+		float multiplier = 0.4f;
 		
-		//Byt mellan orbit och tumble med A
-		if (shared.isOrbit == true)
+		//Byt mellan rörelse och rotation med W
+		if (shared.isMovement == false)
 		{
-			shared.camera.orbitPitch(deltaY);
-			shared.camera.orbitYaw(deltaX);
+			//Byt mellan roll och icke roll med R
+			if (shared.isRoll != true)
+			{
+				//Byt mellan orbit och tumble med E
+				if (shared.isOrbit == true)
+				{
+					shared.camera.orbitPitch(deltaY * multiplier);
+					shared.camera.orbitYaw(deltaX * multiplier);
+				}
+				else
+				{
+					shared.camera.tumblePitch(-deltaY * multiplier);
+					shared.camera.tumbleYaw(-deltaX * multiplier);
+				}
+			}
+			//Kan inte använda roll rotation och pitch/yaw samtidigt (3 axlar att rotera efter, men endast 2 axlar att röra musen i)
+			else
+			{
+				shared.camera.roll(deltaX * multiplier);
+			}
 		}
 		else
 		{
-			shared.camera.tumblePitch(-deltaY);
-			shared.camera.tumbleYaw(-deltaX);
+			//Moveposition
+			if (shared.mode == 1)
+			{
+				shared.camera.movePosition(deltaX, deltaY, 0);
+			}
+			if (shared.mode == 2)
+			{
+				shared.camera.movePosition(0, 0, deltaY);
+			}
+			//Movetarget
+			if (shared.mode == 3)
+			{
+				shared.camera.moveTarget(deltaX, -deltaY, 0);
+			}
+			if (shared.mode == 4)
+			{
+				//Förflytta kameran och vart kameran ska titta i Z-led för att visa vad som faktiskt händer
+				shared.camera.moveTarget(0, 0, deltaY);
+				shared.camera.movePosition(0, 0, deltaY);
+			}
+			//Strafe
+			if (shared.mode == 5)
+			{
+				shared.camera.strafeRight(deltaX);
+				shared.camera.strafeUp(-deltaY);
+			}
+			if (shared.mode == 6)
+			{
+				shared.camera.strafeForward(deltaY);
+			}
 		}
 
 		glutWarpPointer(centerX, centerY);
