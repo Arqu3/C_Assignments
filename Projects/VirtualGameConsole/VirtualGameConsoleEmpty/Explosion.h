@@ -14,8 +14,8 @@ public:
 	static void initialize();
 	static void finalize();
 
-	virtual void render();
-	virtual void update();
+	void render();
+	void update();
 
 	VGCVector mPosition;
 	float mTimer;

@@ -9,9 +9,9 @@ class Enemy : public Entity
 public:
 	Enemy(VGCVector Position, VGCRectangle Rectangle, int WDirection, float bulletCD);
 	~Enemy();
-	virtual void update();
-	virtual void render();
-	virtual bool visibilityCheck();
+	void update();
+	void render();
+	bool visibilityCheck();
 	static void initialize();
 	static void finalize();
 

@@ -7,10 +7,10 @@ class Bullet : public Entity
 {
 public:
 	Bullet(VGCVector Position, VGCRectangle Rectangle, VGCVector Direction);
-	virtual ~Bullet();
-	virtual void update();
-	virtual void render();
-	virtual void visibilityCheck();
+	~Bullet();
+	void update();
+	void render();
+	void visibilityCheck();
 	static void initialize();
 	static void finalize();
 

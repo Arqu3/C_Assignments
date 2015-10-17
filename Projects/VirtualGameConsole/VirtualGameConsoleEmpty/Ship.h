@@ -10,9 +10,9 @@ class Ship : public Entity
 {
 public:
 	Ship();
-	virtual ~Ship();
-	virtual void update();
-	virtual void render();
+	 ~Ship();
+	void update();
+	void render();
 	static void initialize();
 	static void finalize();
 	bool isAlive();
@@ -27,12 +27,12 @@ public:
 private:
 	VGCVector mPosition;
 
-	virtual void addBullet();
-	virtual void updateBullet();
-	virtual void move();
-	virtual void setRectangle();
-	virtual void renderBullet();
-	virtual void renderText();
+	void addBullet();
+	void updateBullet();
+	void move();
+	void setRectangle();
+	void renderBullet();
+	void renderText();
 };
 
 #endif

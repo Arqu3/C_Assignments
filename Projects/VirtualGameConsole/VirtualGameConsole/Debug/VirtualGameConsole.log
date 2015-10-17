@@ -1,8 +1,8 @@
-﻿Build started 12/10/2015 13:10:31.
-     1>Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-10-17 14:54:17.
+     1>Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
      1>Lib:
-         VirtualGameConsole.vcxproj -> C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
-     1>Done Building Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
+         VirtualGameConsole.vcxproj -> D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
+     1>Done Building Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
 
 Build succeeded.
 
