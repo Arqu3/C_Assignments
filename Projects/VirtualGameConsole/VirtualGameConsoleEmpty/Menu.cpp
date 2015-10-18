@@ -80,6 +80,10 @@ void Menu::renderPause()
 	VGCVector unPPosition(VGCDisplay::getWidth() / 2, 300);
 	VGCAdjustment unPAdjustment(0.5, 0.5);
 
+	//Exit to main menu
+	VGCVector mainMPosition(0, 45);
+	VGCAdjustment mainMAdjustment(0.0, 0.0);
+
 	static const int fontSize = 30;
 	VGCFont font = VGCDisplay::openFont("Arial", fontSize);
 
@@ -93,6 +97,10 @@ void Menu::renderPause()
 	{
 		VGCDisplay::renderString(font, unpauseText, white, unPPosition, unPAdjustment);
 	}
+
+	//Render exit to main menu
+	const string mainMText = "Q to exit to main menu";
+	VGCDisplay::renderString(font, mainMText, red, mainMPosition, mainMAdjustment);
 
 	VGCDisplay::closeFont(font);
 }

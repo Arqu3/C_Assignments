@@ -147,7 +147,15 @@ void Game::handleStates()
 			mCurrentState = InGame;
 		}
 	}
-
+	//Exit to main menu if paused & pressed Q
+	if (mCurrentState == Paused)
+	{
+		if (VGCKeyboard::wasPressed(VGCKey::Q_KEY))
+		{
+			mCurrentState = MainMenu;
+			isPaused = false;
+		}
+	}
 }
 
 void Game::menuHandler()

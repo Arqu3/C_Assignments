@@ -1,9 +1,9 @@
-﻿Build started 15/10/2015 12:43:17.
+﻿Build started 18/10/2015 18:28:15.
      1>Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Grafikprog2\Grafikprog2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Ludwig\Documents\glut /IC:\Users\Ludwig\Documents\devil\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\..\Datorgrafik del 3\Datorgrafik.cpp"
          Datorgrafik.cpp
-     1>c:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\datorgrafik.cpp(236): warning C4065: switch statement contains 'default' but no 'case' labels
+     1>c:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\datorgrafik.cpp(254): warning C4065: switch statement contains 'default' but no 'case' labels
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Ludwig\Documents\devil\lib /LIBPATH:C:\Users\Ludwig\Documents\glut glut32.lib DevIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.lib" /MACHINE:X86 Debug\Camera.obj
          Debug\Datorgrafik.obj
@@ -13,4 +13,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.82
+Time Elapsed 00:00:01.05

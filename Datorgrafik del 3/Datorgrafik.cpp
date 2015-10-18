@@ -23,6 +23,7 @@ struct Shared
 	bool isOrbit = true;
 	bool isRoll = false;
 	bool isMovement = false;
+	bool is4View = false;
 	int mode = 1;
 };
 
@@ -123,14 +124,16 @@ void initialize()
 
 void drawPolyObject()
 {
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT, GL_FILL);
+
 	glPushMatrix();
 	//Förflytta X mha cos
 	glTranslatef(0, 15, 0);
 	glTranslatef(15 * cos(shared.time), 0, 0);
 
 	//Rita ut objektet från deluppg 1 mha indexlista
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_FILL);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -144,10 +147,17 @@ void drawPolyObject()
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	glPopMatrix();
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
 }
 
 void drawSphere()
 {
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
 	glPushMatrix();
 
 	glTranslatef(-10 * cos(shared.time), 5 * sin(shared.time), 0);
@@ -156,6 +166,10 @@ void drawSphere()
 	gluSphere(shared.quadric, 5, 32, 32);
 
 	glPopMatrix();
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
 }
 
 // Vår egen underfunktion som ritar ut scenen
@@ -168,13 +182,13 @@ void drawScene()
 	glDisable(GL_BLEND);
 	glPolygonMode(GL_FRONT, GL_FILL);
 
-	drawSphere();
-
-	drawPolyObject();
-
 	// Rita golv och pelare
 	drawFloor(shared.floorTexture);
 	drawPillars(shared.pillarTexture);
+
+	drawSphere();
+
+	drawPolyObject();
 }
 
 
@@ -200,6 +214,10 @@ void keyboard(unsigned char key, int x, int y)
 
 	case 'w':
 		shared.isMovement = !shared.isMovement;
+		break;
+
+	case 'q':
+		shared.is4View = !shared.is4View;
 		break;
 
 	//Förflyttningslägen
@@ -263,15 +281,42 @@ void display()
 
 	glMatrixMode(GL_MODELVIEW);
 	
-	glLoadIdentity();
-	glViewport(0, 0, 325, 250);
-	shared.camera.lookAt();   // Skapar vymatris via kameraklassen
-	drawScene();
+	//W = 640, H = 480
 
-	glLoadIdentity();
-	glViewport(325, 250, 325, 250);
-	gluLookAt(-60, 0, 0, 0, 0, 0, 0, 1, 0);
-	drawScene();
+	if (shared.is4View == true)
+	{
+		//Rörlig kamera
+		glLoadIdentity();
+		glViewport(0, 0, 325, 250);
+		shared.camera.lookAt();   // Skapar vymatris via kameraklassen
+		drawScene();
+
+		//Från sidan
+		glLoadIdentity();
+		glViewport(325, 220, 325, 250);
+		gluLookAt(-60, 0, 0, 0, 0, 0, 0, 1, 0);
+		drawScene();
+
+		//Framifrån
+		glLoadIdentity();
+		glViewport(0, 220, 325, 250);
+		gluLookAt(0, 0, 60, 0, 0, 0, 0, 1, 0);
+		drawScene();
+
+		//Uppifrån
+		glLoadIdentity();
+		glViewport(325, 0, 325, 250);
+		gluLookAt(0, 60, 0, 0, 0, 0, 1, 0, 0);
+		drawScene();
+	}
+	else
+	{
+		//Rörlig kamera
+		glLoadIdentity();
+		glViewport(0, 0, 640, 480);
+		shared.camera.lookAt();   // Skapar vymatris via kameraklassen
+		drawScene();
+	}
 
 	glutSwapBuffers();
 }
