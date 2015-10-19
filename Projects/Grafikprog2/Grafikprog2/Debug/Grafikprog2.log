@@ -1,16 +1,31 @@
-﻿Build started 19/10/2015 15:07:58.
-     1>Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Grafikprog2\Grafikprog2.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-10-19 18:17:31.
+     1>Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Grafikprog2\Grafikprog2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Ludwig\Documents\glut /IC:\Users\Ludwig\Documents\devil\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\..\Datorgrafik del 3\Datorgrafik.cpp"
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Ludwig\Documents\glut /IC:\Users\Ludwig\Documents\devil\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\..\Datorgrafik del 3\Camera.cpp" "..\..\..\Datorgrafik del 3\Datorgrafik.cpp" "..\..\..\Datorgrafik del 3\Support.cpp"
+         Support.cpp
          Datorgrafik.cpp
-     1>c:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\datorgrafik.cpp(329): warning C4065: switch statement contains 'default' but no 'case' labels
+     1>d:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\datorgrafik.cpp(329): warning C4065: switch statement contains 'default' but no 'case' labels
+         Camera.cpp
+     1>d:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\quaternion.h(219): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+                 d:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\quaternion.h(217) : while compiling class template member function 'Quaternion<float>::Quaternion(T,const Vector3<T> &)'
+                 with
+                 [
+                     T=float
+                 ]
+                 d:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\camera.cpp(60) : see reference to function template instantiation 'Quaternion<float>::Quaternion(T,const Vector3<T> &)' being compiled
+                 with
+                 [
+                     T=float
+                 ]
+                 d:\users\ludwig\documents\github\c_assignments\datorgrafik del 3\camera.cpp(60) : see reference to class template instantiation 'Quaternion<float>' being compiled
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Ludwig\Documents\devil\lib /LIBPATH:C:\Users\Ludwig\Documents\glut glut32.lib DevIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.lib" /MACHINE:X86 Debug\Camera.obj
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Ludwig\Documents\devil\lib /LIBPATH:C:\Users\Ludwig\Documents\glut glut32.lib DevIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.lib" /MACHINE:X86 Debug\Camera.obj
          Debug\Datorgrafik.obj
          Debug\Support.obj
-         Grafikprog2.vcxproj -> C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.exe
-     1>Done Building Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Grafikprog2\Grafikprog2.vcxproj" (Build target(s)).
+         Grafikprog2.vcxproj -> D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Debug\Grafikprog2.exe
+     1>Done Building Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\Grafikprog2\Grafikprog2\Grafikprog2.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.46
+Time Elapsed 00:00:01.64

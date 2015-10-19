@@ -14,6 +14,7 @@ bool drawVertex = true;
 #pragma  region Vertices
 GLfloat vertexArray[] = 
 {
+	//Specifierar koordinater för punkter i rymden
 	-7, -5, -7, //0
 
 	7, -5, -7, //1
@@ -37,6 +38,7 @@ GLfloat vertexArray[] =
 #pragma  region VertexIndex
 GLint indexArray[] =
 {
+	//Hämtar indexvärden från åvanstående array för att skapa trianglar
 	0, 1, 2,
 
 	2, 3, 0,
@@ -71,6 +73,7 @@ GLint indexArray[] =
 #pragma  region Colors
 GLfloat colorArray[] =
 {
+	//Specifierar vilken färg olika punkter ska ha
 	0.4, 0.4, 0.4,
 
 	0.9, 0.7, 0.4,
@@ -349,13 +352,13 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 
 	case 'f':
-
+		//Toggla av/på utritning mha indexlista
 		drawVertex = !drawVertex;
 
 		break;
 
 	case 'e':
-
+		//Toggla av/på rotation av kamera
 		rotateCamera = !rotateCamera;
 
 		break;
@@ -468,6 +471,7 @@ void display()
 		}
 	}
 
+	//Bestämmer om objektet ska ritas ut mha indexlista eller "vanligt" mha glBegin() o glEnd()
 	if (drawVertex)
 	{
 		drawVList();

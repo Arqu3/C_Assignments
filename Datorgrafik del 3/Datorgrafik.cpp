@@ -35,6 +35,7 @@ Vector3f targetPos;
 #pragma  region Vertices
 GLfloat vertexArray[] =
 {
+	//Specifierar koordinater för punkter i rymden
 	-7, -5, -7, //0
 
 	7, -5, -7, //1
@@ -58,6 +59,7 @@ GLfloat vertexArray[] =
 #pragma  region VertexIndex
 GLint indexArray[] =
 {
+	//Hämtar indexvärden från åvanstående array för att skapa trianglar
 	0, 1, 2,
 
 	2, 3, 0,
@@ -90,6 +92,7 @@ GLint indexArray[] =
 #pragma  region Colors
 GLfloat colorArray[] =
 {
+	//Specifierar vilken färg olika punkter ska ha
 	0.4, 0.4, 0.4,
 
 	0.9, 0.7, 0.4,
@@ -132,6 +135,7 @@ void drawPolyObject()
 	glPolygonMode(GL_FRONT, GL_FILL);
 
 	glPushMatrix();
+
 	//Förflytta X mha cos
 	glTranslatef(0, 15, 0);
 	glTranslatef(15 * cos(shared.time), 0, 0);
@@ -162,6 +166,7 @@ void drawSphere()
 
 	glPushMatrix();
 
+	//Förflytta X mha cos o Y mha sin
 	glTranslatef(-10 * cos(shared.time), 5 * sin(shared.time), 0);
 
 	glBindTexture(GL_TEXTURE_2D, shared.earthTexture);
@@ -229,7 +234,7 @@ void drawLine()
 
 	glBegin(GL_LINES);
 
-	//Rita linje mellan två positioner
+	//Rita linje mellan kamerans position och vart kameran kollar
 	glVertex3f(targetPos.x(), targetPos.y(), targetPos.z());
 	glVertex3f(cameraPos.x(), cameraPos.y(), cameraPos.z());
 
@@ -253,13 +258,17 @@ void drawScene()
 	drawFloor(shared.floorTexture);
 	drawPillars(shared.pillarTexture);
 
+	//Rita referens-sfär
 	drawSphere();
 
+	//Rita kamera-sfärer
 	drawCameraPosSphere();
 	drawCameraTargetSphere();
 
+	//Rita linje
 	drawLine();
 
+	//Rita referens-polyobjekt
 	drawPolyObject();
 }
 
@@ -276,6 +285,7 @@ void keyboard(unsigned char key, int x, int y)
 		shared.pause = !shared.pause;
 		break;
 
+	//Rotations o rörelselägen
 	case 'e':
 		shared.isOrbit = !shared.isOrbit;
 		break;
@@ -357,7 +367,7 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	
 	//W = 640, H = 480
-
+	//Skärmen har antingen 4 eller 1 vy
 	if (shared.is4View == true)
 	{
 		//Rörlig kamera
@@ -436,7 +446,7 @@ void passiveMotion(int x, int y)
 		float multiplier = 0.4f;
 		
 		//Byt mellan rörelse och rotation med W
-		if (shared.isMovement == false)
+		if (shared.isMovement != true)
 		{
 			//Byt mellan roll och icke roll med R
 			if (shared.isRoll != true)
@@ -461,6 +471,7 @@ void passiveMotion(int x, int y)
 		}
 		else
 		{
+			//Bestämmer rörelselägen med 1-7
 			//Moveposition
 			if (shared.mode == 1)
 			{

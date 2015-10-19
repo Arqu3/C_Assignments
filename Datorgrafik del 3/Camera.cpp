@@ -119,11 +119,13 @@ void Camera::lookAt()
 	);	
 }
 
+//Hämtar kamerans position
 Vector3f Camera::getPosition()
 {
 	return position;
 }
 
+//Hämtar kamerans tittpunkt
 Vector3f Camera::getTarget()
 {
 	return target;

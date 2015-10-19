@@ -34,6 +34,7 @@ void initialize()
 	shared.quadric = gluNewQuadric();
 	gluQuadricTexture(shared.quadric, true);
 
+	//Ladda in texturer
 	loadTexture("Sun.png", &shared.sunTexture);
 	loadTexture("RockyPlanet2.png", &shared.planetTexture);
 	loadTexture("GasPlanet2.png", &shared.planetTextureG);
@@ -60,6 +61,7 @@ void drawRockyPlanet()
 	//Rotera planeten så att nordpolen är uppåt
 	glRotatef(90, 1, 0, 0);
 
+	//Material - DIFFUSE, SPECULAR, AMBIENT, SHININESS
 	GLfloat material_Diffuse[] = { 0.8, 0.8, 0.8, 1 };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_Diffuse);
 
@@ -72,6 +74,7 @@ void drawRockyPlanet()
 	GLfloat material_Shininess[] = { 100 };
 	glMaterialfv(GL_FRONT, GL_SHININESS, material_Shininess);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.planetTexture);
 	gluSphere(shared.quadric, 2.5, 32, 32);
 
@@ -89,8 +92,10 @@ void drawGasPlanet()
 	//Individuell rotation
 	glRotatef(90 * shared.time, 0, 1, 0);
 
+	//Flip
 	glRotatef(90, 1, 0, 0);
 
+	//Material
 	GLfloat material_Diffuse[] = { 0.8, 0.8, 0.8, 1 };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_Diffuse);
 
@@ -103,6 +108,7 @@ void drawGasPlanet()
 	GLfloat material_Shininess[] = { 100 };
 	glMaterialfv(GL_FRONT, GL_SHININESS, material_Shininess);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.planetTextureG);
 	gluSphere(shared.quadric, 4, 32, 32);
 
@@ -141,6 +147,7 @@ void drawEarth()
 	//Flip
 	glRotatef(90, 1, 0, 0);
 
+	//Material
 	GLfloat material_Diffuse[] = { 0.8, 0.8, 0.8, 1 };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_Diffuse);
 
@@ -153,6 +160,7 @@ void drawEarth()
 	GLfloat material_Shininess[] = { 100 };
 	glMaterialfv(GL_FRONT, GL_SHININESS, material_Shininess);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.earthTexture);
 	gluSphere(shared.quadric, 2.5, 32, 32);
 
@@ -161,9 +169,11 @@ void drawEarth()
 
 	glRotatef(180 * shared.time, 0, 0, 1);
 
+	//Alphablending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.cloudTexture);
 	gluSphere(shared.quadric, 2.8, 32, 32);
 
@@ -177,6 +187,7 @@ void drawEarth()
 	glRotatef(90 * shared.time, 0, 1, 0);
 	glTranslatef(1, 4, 0);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.moonTexture1);
 	gluSphere(shared.quadric, 0.6, 32, 32);
 
@@ -199,6 +210,7 @@ void drawGasPlanet1()
 	//Flip
 	glRotatef(90, 1, 0, 0);
 
+	//Material
 	GLfloat material_Diffuse[] = { 0.8, 0.8, 0.8, 1 };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, material_Diffuse);
 
@@ -211,9 +223,10 @@ void drawGasPlanet1()
 	GLfloat material_Shininess[] = { 100 };
 	glMaterialfv(GL_FRONT, GL_SHININESS, material_Shininess);
 
-	//Skala
+	//Skala - 20% högre än vad den är bred o djup
 	glScalef(1, 1, 1.2);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.planetTextureG1);
 	gluSphere(shared.quadric, 4.5, 32, 32);
 
@@ -225,6 +238,7 @@ void drawGasPlanet1()
 	glTranslatef(10, 0, 0);
 	glRotatef(90 * shared.time, 0, 1, 0);
 
+	//Bind texturen och rita ut objektet
 	glBindTexture(GL_TEXTURE_2D, shared.moonTexture1);
 	gluSphere(shared.quadric, 1, 32, 32);
 
@@ -235,9 +249,11 @@ void drawGasPlanet1()
 
 	glDepthMask(false);
 
+	//Stäng av ljusberäkning till ringsystemet
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT1);
 
+	//Alphablending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
