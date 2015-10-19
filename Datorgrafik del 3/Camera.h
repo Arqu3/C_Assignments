@@ -38,6 +38,8 @@ public:
 	void roll(float angle);
 
 	void lookAt();
+    Vector3f getPosition();
+	Vector3f getTarget();
 
 private:
 	Vector3f position, target;

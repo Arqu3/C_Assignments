@@ -29,6 +29,9 @@ struct Shared
 
 struct Shared shared;
 
+Vector3f cameraPos;
+Vector3f targetPos;
+
 #pragma  region Vertices
 GLfloat vertexArray[] =
 {
@@ -133,14 +136,13 @@ void drawPolyObject()
 	glTranslatef(0, 15, 0);
 	glTranslatef(15 * cos(shared.time), 0, 0);
 
-	//Rita ut objektet från deluppg 1 mha indexlista
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
 	glVertexPointer(3, GL_FLOAT, 0, vertexArray);
 	glColorPointer(3, GL_FLOAT, 0, colorArray);
 
+	//Rita ut objektet från deluppg 1 mha indexlista
 	glDrawElements(GL_TRIANGLES, 42, GL_UNSIGNED_INT, indexArray);
 
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -172,6 +174,71 @@ void drawSphere()
 	glDisable(GL_DEPTH_TEST);
 }
 
+void drawCameraPosSphere()
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	//Bind cameraPos till kamerans lokala position
+	cameraPos = shared.camera.getPosition();
+
+	glPushMatrix();
+
+	//Translera objektet efter kamerans position
+	glTranslatef(cameraPos.x(), cameraPos.y(), cameraPos.z());
+	gluSphere(shared.quadric, 3, 32, 32);
+
+	glPopMatrix();
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+}
+
+void drawCameraTargetSphere()
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	//Sätt position
+	targetPos = shared.camera.getTarget();
+
+	glPushMatrix();
+
+	//Rita ut sfär på given position
+	glTranslatef(targetPos.x(), targetPos.y(), targetPos.z());
+	gluSphere(shared.quadric, 3, 32, 32);
+
+	glPopMatrix();
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+}
+
+void drawLine()
+{
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	//Bestämm bredd och färg
+	glLineWidth(3.5f);
+	glColor3f(0, 1, 0);
+
+	//Sätt positioner
+	targetPos = shared.camera.getTarget();
+	cameraPos = shared.camera.getPosition();
+
+	glBegin(GL_LINES);
+
+	//Rita linje mellan två positioner
+	glVertex3f(targetPos.x(), targetPos.y(), targetPos.z());
+	glVertex3f(cameraPos.x(), cameraPos.y(), cameraPos.z());
+
+	glEnd();
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+}
+
 // Vår egen underfunktion som ritar ut scenen
 void drawScene()
 {
@@ -187,6 +254,11 @@ void drawScene()
 	drawPillars(shared.pillarTexture);
 
 	drawSphere();
+
+	drawCameraPosSphere();
+	drawCameraTargetSphere();
+
+	drawLine();
 
 	drawPolyObject();
 }
@@ -238,6 +310,9 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case '6':
 		shared.mode = 6;
+		break;
+	case '7':
+		shared.mode = 7;
 		break;
 	}
 }
@@ -307,7 +382,7 @@ void display()
 		glLoadIdentity();
 		glViewport(325, 0, 325, 250);
 		gluLookAt(0, 60, 0, 0, 0, 0, 1, 0, 0);
-		drawScene();
+		drawScene(); 
 	}
 	else
 	{
@@ -410,9 +485,12 @@ void passiveMotion(int x, int y)
 			if (shared.mode == 5)
 			{
 				shared.camera.strafeRight(deltaX);
-				shared.camera.strafeUp(-deltaY);
 			}
 			if (shared.mode == 6)
+			{
+				shared.camera.strafeUp(-deltaY);
+			}
+			if (shared.mode == 7)
 			{
 				shared.camera.strafeForward(deltaY);
 			}

@@ -118,3 +118,13 @@ void Camera::lookAt()
 		up.x(), up.y(), up.z()
 	);	
 }
+
+Vector3f Camera::getPosition()
+{
+	return position;
+}
+
+Vector3f Camera::getTarget()
+{
+	return target;
+}
