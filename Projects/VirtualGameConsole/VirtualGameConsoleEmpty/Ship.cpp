@@ -72,6 +72,16 @@ bool Ship::isAlive()
 	return mIsAlive;
 }
 
+void Ship::takeDMG(int dmg)
+{
+	mHealth -= dmg;
+}
+
+void Ship::addScore()
+{
+	mScore += 1;
+}
+
 void Ship::move()
 {
 	//Set movement restrictions

@@ -12,15 +12,22 @@ public:
 	void update();
 	void render();
 	bool visibilityCheck();
+	bool canAddBullet();
+	VGCVector getPosition();
+	void setDead();
+	bool isAlive();
 	static void initialize();
 	static void finalize();
 
+private:
 	float mBulletCD;
 	VGCVector mPosition;
-
-private:
 	int mDirection;
 	bool mIsVisible;
+
+	void move();
+	void setRectangle();
+	void cdTick();
 };
 
 #endif

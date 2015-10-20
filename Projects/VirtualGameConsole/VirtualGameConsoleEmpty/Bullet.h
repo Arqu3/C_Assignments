@@ -14,11 +14,12 @@ public:
 	static void initialize();
 	static void finalize();
 
-	virtual float clamp(float n, float lower, float upper);
 
 private:
 	VGCVector mPosition;
 	VGCVector mDirection;
+
+	virtual float clamp(float n, float lower, float upper);
 };
 
 #endif

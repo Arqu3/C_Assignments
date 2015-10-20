@@ -17,14 +17,12 @@ Ship *ship;
 //Menu reference
 Menu *menu;
 
-//Enemy
-int countE = 5;
-float spawnTimer = 0.0f;
-
 Game::Game() :
 	mCurrentState(MainMenu),
 	isPaused(false),
-	endGame(false)
+	endGame(false),
+	spawnTimer(0.0f),
+	spawnInterval(50.0f)
 {
 	VGCVirtualGameConsole::initialize(name, width, height);
 	Ship::initialize();
@@ -202,30 +200,30 @@ void Game::update()
 			if (mEnemies[j]->mRectangle.isInside(ship->Projectiles[i]->mRectangle.getPosition()))
 			{
 				//Remove bullet and enemy if they collide
-				mExplosions.push_back(new Explosion(mEnemies[j]->mPosition, 30));
+				mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
 				ship->Projectiles[i]->mIsAlive = false;
-				mEnemies[j]->mIsAlive = false;
+				mEnemies[j]->setDead();
 			}
 		}
 
 		if (ship->mRectangle.isInside(mEnemies[j]->mRectangle.getPosition()))
 		{
 			//Remove enemy and player health if player and enemy collide
-			ship->mHealth -= 10;
-			mExplosions.push_back(new Explosion(mEnemies[j]->mPosition, 30));
-			mEnemies[j]->mIsAlive = false;
+			ship->takeDMG(10);
+			mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
+			mEnemies[j]->setDead();
 		}
 
-		if (mEnemies[j]->mBulletCD == 0)
+		if (mEnemies[j]->canAddBullet())
 		{
 			//Add enemy bullets
-			mEProjectiles.push_back(new Bullet(mEnemies[j]->mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, 1)));
+			mEProjectiles.push_back(new Bullet(mEnemies[j]->getPosition(), VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, 1)));
 		}
 
-		if (mEnemies[j]->mIsAlive == false)
+		if (!mEnemies[j]->isAlive())
 		{
 			//If enemy isn't alive, remove and add score to player
-			ship->mScore += 1;
+			ship->addScore();
 			mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
 			break;
 		}
@@ -237,14 +235,14 @@ void Game::update()
 		}
 	}
 
-	for (EntityVector::size_type i = 0; i < mEProjectiles.size(); i++)
+	for (ProjectileVector::size_type i = 0; i < mEProjectiles.size(); i++)
 	{
 		mEProjectiles[i]->update();
 
 		if (ship->mRectangle.isInside(mEProjectiles[i]->mRectangle.getPosition()))
 		{
 			//Remove player health and projectile if they collide
-			ship->mHealth -= 10;
+			ship->takeDMG(5);
 			mEProjectiles[i]->mIsAlive = false;
 		}
 
@@ -289,7 +287,7 @@ void Game::render()
 void Game::addEnemies()
 {
 	spawnTimer++;
-	if (spawnTimer >= 25.0f)
+	if (spawnTimer >= spawnInterval)
 	{
 		spawnTimer = 0.0f;
 	}

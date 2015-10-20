@@ -28,49 +28,13 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
-	width = VGCDisplay::getWidth(image);
-	height = VGCDisplay::getHeight(image);
+	move();
 
-	int x = mPosition.getX();
-	int y = mPosition.getY();
+	setRectangle();
 
-	//Change  X-direction if at the edge of screen
-	if (x > VGCDisplay::getWidth() - width / 2)
-	{
-		mDirection = 0;
-	}
-	if (x < 0 + width / 2)
-	{
-		mDirection = 1;
-	}
-
-	if (mDirection == 0)
-	{
-		x -= speed;
-	}
-	else
-	{
-		x += speed;
-	}
-	y += speed;
-
-	//Set position
-	mPosition.setX(x);
-	mPosition.setY(y);
-
-	//Set rectangle
-	mRectangle.setPosition(mPosition);
-	mRectangle.setHeight(height);
-	mRectangle.setWidth(width);
+	cdTick();
 
 	visibilityCheck();
-
-	//Bullet CD
-	mBulletCD++;
-	if (mBulletCD >= 15.0f)
-	{
-		mBulletCD = 0.0f;
-	}
 }
 
 void Enemy::render()
@@ -102,4 +66,85 @@ bool Enemy::visibilityCheck()
 		mIsVisible = true;
 	}
 	return mIsVisible;
+}
+
+void Enemy::setDead()
+{
+	mIsAlive = false;
+}
+
+bool Enemy::isAlive()
+{
+	return mIsAlive;
+}
+
+bool Enemy::canAddBullet()
+{
+	if (mBulletCD == 0.0f)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+VGCVector Enemy::getPosition()
+{
+	return mPosition;
+}
+
+void Enemy::cdTick()
+{
+	//Bullet CD
+	mBulletCD++;
+	if (mBulletCD >= 15.0f)
+	{
+		mBulletCD = 0.0f;
+	}
+}
+
+void Enemy::move()
+{
+	width = VGCDisplay::getWidth(image);
+	height = VGCDisplay::getHeight(image);
+
+	int x = mPosition.getX();
+	int y = mPosition.getY();
+
+	//Change X-direction if at the edge of screen
+	if (x > VGCDisplay::getWidth() - width / 2)
+	{
+		mDirection = 0;
+	}
+	if (x < 0 + width / 2)
+	{
+		mDirection = 1;
+	}
+
+	if (mDirection == 0)
+	{
+		x -= speed;
+	}
+	else
+	{
+		x += speed;
+	}
+	y += speed;
+
+	//Set position
+	mPosition.setX(x);
+	mPosition.setY(y);
+}
+
+void Enemy::setRectangle()
+{
+	width = VGCDisplay::getWidth(image);
+	height = VGCDisplay::getHeight(image);
+
+	//Set rectangle
+	mRectangle.setPosition(mPosition);
+	mRectangle.setHeight(height);
+	mRectangle.setWidth(width);
 }

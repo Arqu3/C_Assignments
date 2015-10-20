@@ -1,48 +1,9 @@
-﻿Build started 18/10/2015 19:09:23.
-     1>Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt VGCAdjustment.cpp VGCAssert.cpp VGCBootstrap.cpp VGCBus.cpp VGCClock.cpp VGCError.cpp VGCHandler.cpp VGCKey.cpp VGCKeyboard.cpp VGCMessage.cpp VGCRandomizer.cpp VGCReferenced.cpp VGCTimerImp.cpp VGCWindow.cpp
-         Skipping... (no relevant changes detected)
-         VGCWindow.cpp
-         VGCTimerImp.cpp
-         VGCReferenced.cpp
-         VGCRandomizer.cpp
-         VGCMessage.cpp
-         VGCKeyboard.cpp
-         VGCKey.cpp
-         VGCHandler.cpp
-         VGCError.cpp
-         VGCClock.cpp
-         VGCBus.cpp
-         VGCBootstrap.cpp
-         VGCAssert.cpp
-         VGCAdjustment.cpp
-       Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Debug\VirtualGameConsole.lib" /NOLOGO Debug\VGCAdjustment.obj
-         Debug\VGCAssert.obj
-         Debug\VGCBootstrap.obj
-         Debug\VGCBus.obj
-         Debug\VGCClock.obj
-         Debug\VGCColor.obj
-         Debug\VGCDisplay.obj
-         Debug\VGCError.obj
-         Debug\VGCFontImp.obj
-         Debug\VGCGDIPlus.obj
-         Debug\VGCHandler.obj
-         Debug\VGCImageImp.obj
-         Debug\VGCKey.obj
-         Debug\VGCKeyboard.obj
-         Debug\VGCMessage.obj
-         Debug\VGCRandomizer.obj
-         Debug\VGCRectangle.obj
-         Debug\VGCReferenced.obj
-         Debug\VGCTimerImp.obj
-         Debug\VGCVector.obj
-         Debug\VGCVirtualGameConsole.obj
-         Debug\VGCWindow.obj
-         VirtualGameConsole.vcxproj -> C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
-     1>Done Building Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
+﻿Build started 2015-10-20 13:21:17.
+     1>Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
+     1>Lib:
+         VirtualGameConsole.vcxproj -> D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
+     1>Done Building Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.35
+Time Elapsed 00:00:00.04

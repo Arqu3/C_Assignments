@@ -28,11 +28,15 @@ private:
 	void loadShip();
 
 	typedef std::vector<Entity*> EntityVector;
+	typedef std::vector<Bullet*> ProjectileVector;
 
-	EntityVector mEProjectiles;
+	ProjectileVector mEProjectiles;
 
 	typedef std::vector<Enemy*> EnemyVector;
 	EnemyVector mEnemies;
+
+	float spawnTimer;
+	float spawnInterval;
 
 	typedef std::vector<Explosion*> ExplosionVector;
 	ExplosionVector mExplosions;

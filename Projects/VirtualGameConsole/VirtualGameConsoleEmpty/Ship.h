@@ -16,16 +16,17 @@ public:
 	static void initialize();
 	static void finalize();
 	bool isAlive();
+	void takeDMG(int dmg);
+	void addScore();
 
 	typedef std::vector<Entity*> EntityVector;
 	EntityVector Projectiles;
 
-	int mHealth;
-	int mScore;
-	float mBulletCD;
-
 private:
 	VGCVector mPosition;
+	float mBulletCD;
+	int mHealth;
+	int mScore;
 
 	void addBullet();
 	void updateBullet();
