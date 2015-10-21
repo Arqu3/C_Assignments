@@ -2,15 +2,19 @@
 #define INCLUDED_BULLET
 
 #include "Entity.h"
+#include <string>
 
 class Bullet : public Entity
 {
 public:
-	Bullet(VGCVector Position, VGCRectangle Rectangle, VGCVector Direction);
+	Bullet(VGCVector &Position, VGCRectangle &Rectangle, VGCVector &Direction);
 	~Bullet();
-	void update();
+	void update(EntityVector &entities);
 	void render();
-	void visibilityCheck();
+	bool isAlive();
+	int getDamage();
+	int getRadius();
+	VGCVector getPosition();
 	static void initialize();
 	static void finalize();
 
@@ -18,6 +22,9 @@ public:
 private:
 	VGCVector mPosition;
 	VGCVector mDirection;
+	int mDamage;
+	int mRadius;
+	void visibilityCheck();
 
 	virtual float clamp(float n, float lower, float upper);
 };

@@ -1,5 +1,4 @@
 #include "Menu.h"
-#include <string>
 
 using namespace std;
 
@@ -81,26 +80,26 @@ void Menu::renderPause()
 	VGCAdjustment unPAdjustment(0.5, 0.5);
 
 	//Exit to main menu
-	VGCVector mainMPosition(0, 45);
-	VGCAdjustment mainMAdjustment(0.0, 0.0);
+	VGCVector mainMPosition(VGCDisplay::getWidth() / 2, 400);
+	VGCAdjustment mainMAdjustment(0.5, 0.5);
 
 	static const int fontSize = 30;
 	VGCFont font = VGCDisplay::openFont("Arial", fontSize);
 
 	//Render title
 	const string titleText = "GAME PAUSED";
-	VGCDisplay::renderString(font, titleText, red, titlePosition, titleAdjustment);
+	VGCDisplay::renderString(font, titleText, white, titlePosition, titleAdjustment);
 
 	//Render unpause
 	const string unpauseText = "ESCAPE to unpause";
 	if (mIsvisible == true)
 	{
-		VGCDisplay::renderString(font, unpauseText, white, unPPosition, unPAdjustment);
+		VGCDisplay::renderString(font, unpauseText, red, unPPosition, unPAdjustment);
 	}
 
 	//Render exit to main menu
 	const string mainMText = "Q to exit to main menu";
-	VGCDisplay::renderString(font, mainMText, red, mainMPosition, mainMAdjustment);
+	VGCDisplay::renderString(font, mainMText, white, mainMPosition, mainMAdjustment);
 
 	VGCDisplay::closeFont(font);
 }

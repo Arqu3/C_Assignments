@@ -2,6 +2,7 @@
 #define INCLUDED_MENU
 
 #include "VGCVirtualGameConsole.h"
+#include <string>
 
 class Menu
 {

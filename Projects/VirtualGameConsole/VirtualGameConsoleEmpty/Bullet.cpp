@@ -1,5 +1,4 @@
 #include "Bullet.h"
-#include <string>
 
 using namespace std;
 
@@ -8,9 +7,11 @@ static const int speed = 6;
 static string fileName = "Bullet.png";
 static VGCImage image;
 
-Bullet::Bullet(VGCVector Position, VGCRectangle Rectangle, VGCVector Direction) :
+Bullet::Bullet(VGCVector &Position, VGCRectangle &Rectangle, VGCVector &Direction) :
 	mPosition(Position),
-	mDirection(Direction)
+	mDirection(Direction),
+	mDamage(5),
+	mRadius(3)
 {
 	mRectangle = Rectangle;
 }
@@ -20,7 +21,7 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::update()
+void Bullet::update(EntityVector &entities)
 {
 	int y = mPosition.getY();
 	int x = mPosition.getX();
@@ -73,6 +74,26 @@ void Bullet::visibilityCheck()
 	{
 		mIsAlive = false;
 	}
+}
+
+bool Bullet::isAlive()
+{
+	return mIsAlive;
+}
+
+int Bullet::getDamage()
+{
+	return mDamage;
+}
+
+int Bullet::getRadius()
+{
+	return mRadius;
+}
+
+VGCVector Bullet::getPosition()
+{
+	return mPosition;
 }
 
 float Bullet::clamp(float n, float lower, float upper)

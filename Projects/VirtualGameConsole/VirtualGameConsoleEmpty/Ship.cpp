@@ -1,6 +1,4 @@
 #include "Ship.h"
-#include <string>
-#include <algorithm>
 
 using namespace std;
 
@@ -20,11 +18,14 @@ const VGCAdjustment scoreTAdjustment(1.0, 0.0);
 const VGCVector healthTPosition(0, 0);
 const VGCAdjustment healthTAdjustment(0.0, 0.0);
 
-Ship::Ship() :
-	mPosition(VGCDisplay::getWidth() / 2, VGCDisplay::getHeight() / 2),
+Ship::Ship(VGCVector &Position) :
+	Entity(),
+	mPosition(Position),
 	mHealth(100),
 	mScore(0),
-	mBulletCD(0.0f)
+	mBulletCD(0.0f),
+	mDamage(1),
+	mRadius(16)
 {
 }
 
@@ -33,7 +34,7 @@ Ship::~Ship()
 {
 }
 
-void Ship::update()
+void Ship::update(EntityVector &entities)
 {
 	move();
 
@@ -49,12 +50,10 @@ void Ship::update()
 	//Add bullets
 	if (VGCKeyboard::isPressed(VGCKey::SPACE_KEY) && mBulletCD == 0.0f)
 	{
-		addBullet();
+		addBullet(entities);
 	}
 
-	//Update bullets
-	updateBullet();
-
+	//Checks if alive at end of each frame
 	isAlive();
 }
 
@@ -140,44 +139,36 @@ void Ship::setRectangle()
 	mRectangle.setWidth(width);
 }
 
-void Ship::addBullet()
+int Ship::getDamage()
 {
-	//Middle
-	//mBullets.push_back(Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, -1)));
-	Projectiles.push_back(new Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, -1)));
-	
-	//Right
-	//mBullets.push_back(Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(1, -1)));
-	Projectiles.push_back(new Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(1, -1)));
-	
-	//Left
-	//mBullets.push_back(Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(-1, -1)));
-	Projectiles.push_back(new Bullet(mPosition, VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(-1, -1)));
+	return mDamage;
 }
 
-void Ship::updateBullet()
+int Ship::getRadius()
 {
-	for (EntityVector::size_type i = 0; i < Projectiles.size(); i++)
-	{
-		Projectiles[i]->update();
+	return mRadius;
+}
 
-		//Removes bullets if not visible
-		if (Projectiles[i]->mIsAlive == false)
-		{
-			Projectiles.erase(std::remove(Projectiles.begin(), Projectiles.end(), Projectiles[i]), Projectiles.end());
-		}
-	}
-	//for (BulletVector::size_type i = 0; i < mBullets.size(); i++)
-	//{
-	//	mBullets[i].update();
+VGCVector Ship::getPosition()
+{
+	return mPosition;
+}
 
-	//	//Removes bullets if not visible
-	//	if (mBullets[i].mIsAlive == false)
-	//	{
-	//		//Projectiles.erase(std::remove(Projectiles.begin(), Projectiles.end(), Projectiles[i]), Projectiles.end());
-	//		mBullets.erase(std::remove(mBullets.begin(), mBullets.end(), mBullets[i]), mBullets.end());
-	//	}
-	//}
+void Ship::addBullet(EntityVector &entities)
+{
+	VGCRectangle rect(mPosition, 0, 0);
+
+	//Middle
+	VGCVector directionM(0, -1);
+	entities.push_back(new Bullet(mPosition, rect, directionM));
+	
+	//Right
+	VGCVector directionR(1, -1);
+	entities.push_back(new Bullet(mPosition, rect, directionR));
+	
+	//Left
+	VGCVector directionL(-1, -1);
+	entities.push_back(new Bullet(mPosition, rect, directionL));
 }
 
 void Ship::render()
@@ -186,22 +177,7 @@ void Ship::render()
 	VGCAdjustment adjustment(0.5, 0.5);
 	VGCDisplay::renderImage(image, index, mPosition, adjustment);
 
-	renderBullet();
 	renderText();
-}
-
-void Ship::renderBullet()
-{
-	////Render projectiles
-	for (EntityVector::size_type i = 0; i < Projectiles.size(); i++)
-	{
-		Projectiles[i]->render();
-	}
-	//Render projectiles
-	//for (BulletVector::size_type i = 0; i < mBullets.size(); i++)
-	//{
-	//	mBullets[i].render();
-	//}
 }
 
 void Ship::renderText()

@@ -2,29 +2,18 @@
 
 using namespace std;
 
-//Window
-static string name = "Invaders";
-static const int width = 600;
-static const int height = 640;
-
 //FPS and update time
 static const double FPS = 60;
 static const double updateT = 1.0 / FPS;
 
-//Ship reference
-Ship *ship;
-
-//Menu reference
-Menu *menu;
-
 Game::Game() :
+	mEntities(),
 	mCurrentState(MainMenu),
 	isPaused(false),
 	endGame(false),
 	spawnTimer(0.0f),
 	spawnInterval(50.0f)
 {
-	VGCVirtualGameConsole::initialize(name, width, height);
 	Ship::initialize();
 	Bullet::initialize();
 	Enemy::initialize();
@@ -77,6 +66,7 @@ void Game::start()
 			case InGame:
 				//Update entities
 				update();
+				removeDeadEntities();
 				break;
 
 			case Paused:
@@ -150,6 +140,10 @@ void Game::handleStates()
 	{
 		if (VGCKeyboard::wasPressed(VGCKey::Q_KEY))
 		{
+			//Remove all objects on exit
+			destroy();
+			//Create new menu
+			menu = new Menu();
 			mCurrentState = MainMenu;
 			isPaused = false;
 		}
@@ -163,7 +157,7 @@ void Game::menuHandler()
 		//Start game when pressing Enter
 		if (VGCKeyboard::wasPressed(VGCKey::RETURN_KEY))
 		{
-			destroy();
+			//Load new ship on startup
 			loadShip();
 			mCurrentState = InGame;
 		}
@@ -178,110 +172,109 @@ void Game::menuHandler()
 
 void Game::loadShip()
 {
-	ship = new Ship();
-	menu = new Menu();
+	ship = new Ship(VGCVector(VGCDisplay::getWidth() / 2, VGCDisplay::getHeight() / 2));
+	mEntities.push_back(ship);
 }
 
 void Game::update()
 {
-	//Update ship
-	ship->update();
+	EntityVector entities(mEntities);
+	for (EntityVector::iterator i = entities.begin(); i != entities.end(); i++)
+	{
+		Entity *entity = *i;
+		entity->update(mEntities);
+	}
 
-	//Add enemies
 	addEnemies();
 
-	for (EnemyVector::size_type j = 0; j < mEnemies.size(); j++)
-	{
-		//Update enemies
-		mEnemies[j]->update();
+	////Update ship
+	//ship->update();
 
-		for (EntityVector::size_type i = 0; i < ship->Projectiles.size(); i++)
-		{
-			if (mEnemies[j]->mRectangle.isInside(ship->Projectiles[i]->mRectangle.getPosition()))
-			{
-				//Remove bullet and enemy if they collide
-				mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
-				ship->Projectiles[i]->mIsAlive = false;
-				mEnemies[j]->setDead();
-			}
-		}
+	////Add enemies
+	//addEnemies();
 
-		if (ship->mRectangle.isInside(mEnemies[j]->mRectangle.getPosition()))
-		{
-			//Remove enemy and player health if player and enemy collide
-			ship->takeDMG(10);
-			mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
-			mEnemies[j]->setDead();
-		}
+	//for (EnemyVector::size_type j = 0; j < mEnemies.size(); j++)
+	//{
+	//	//Update enemies
+	//	mEnemies[j]->update();
 
-		if (mEnemies[j]->canAddBullet())
-		{
-			//Add enemy bullets
-			mEProjectiles.push_back(new Bullet(mEnemies[j]->getPosition(), VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, 1)));
-		}
+	//	for (EntityVector::size_type i = 0; i < ship->Projectiles.size(); i++)
+	//	{
+	//		if (mEnemies[j]->mRectangle.isInside(ship->Projectiles[i]->mRectangle.getPosition()))
+	//		{
+	//			//Remove bullet and enemy if they collide
+	//			mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
+	//			ship->Projectiles[i]->mIsAlive = false;
+	//			mEnemies[j]->setDead();
+	//		}
+	//	}
 
-		if (!mEnemies[j]->isAlive())
-		{
-			//If enemy isn't alive, remove and add score to player
-			ship->addScore();
-			mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
-			break;
-		}
-		if (!mEnemies[j]->visibilityCheck())
-		{
-			//If enemy is outside screen, remove it
-			mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
-			break;
-		}
-	}
+	//	if (ship->mRectangle.isInside(mEnemies[j]->mRectangle.getPosition()))
+	//	{
+	//		//Remove enemy and player health if player and enemy collide
+	//		ship->takeDMG(10);
+	//		mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
+	//		mEnemies[j]->setDead();
+	//	}
 
-	for (ProjectileVector::size_type i = 0; i < mEProjectiles.size(); i++)
-	{
-		mEProjectiles[i]->update();
+	//	if (mEnemies[j]->canAddBullet())
+	//	{
+	//		//Add enemy bullets
+	//		mEProjectiles.push_back(new Bullet(mEnemies[j]->getPosition(), VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, 1)));
+	//	}
 
-		if (ship->mRectangle.isInside(mEProjectiles[i]->mRectangle.getPosition()))
-		{
-			//Remove player health and projectile if they collide
-			ship->takeDMG(5);
-			mEProjectiles[i]->mIsAlive = false;
-		}
+	//	if (!mEnemies[j]->isAlive())
+	//	{
+	//		//If enemy isn't alive, remove and add score to player
+	//		ship->addScore();
+	//		mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
+	//		break;
+	//	}
+	//	if (!mEnemies[j]->visibilityCheck())
+	//	{
+	//		//If enemy is outside screen, remove it
+	//		mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
+	//		break;
+	//	}
+	//}
 
-		if (mEProjectiles[i]->mIsAlive == false)
-		{
-			//If projectile isn't alive, remove it
-			mEProjectiles.erase(std::remove(mEProjectiles.begin(), mEProjectiles.end(), mEProjectiles[i]), mEProjectiles.end());
-		}
-	}
+	//for (ProjectileVector::size_type i = 0; i < mEProjectiles.size(); i++)
+	//{
+	//	mEProjectiles[i]->update();
 
-	for (ExplosionVector::size_type i = 0; i < mExplosions.size(); i++)
-	{
-		mExplosions[i]->update();
+	//	if (ship->mRectangle.isInside(mEProjectiles[i]->mRectangle.getPosition()))
+	//	{
+	//		//Remove player health and projectile if they collide
+	//		ship->takeDMG(5);
+	//		mEProjectiles[i]->mIsAlive = false;
+	//	}
 
-		if (mExplosions[i]->mIsAlive == false)
-		{
-			//Remove explosion image after timer ends
-			mExplosions.erase(std::remove(mExplosions.begin(), mExplosions.end(), mExplosions[i]), mExplosions.end());
-		}
-	}
+	//	if (mEProjectiles[i]->mIsAlive == false)
+	//	{
+	//		//If projectile isn't alive, remove it
+	//		mEProjectiles.erase(std::remove(mEProjectiles.begin(), mEProjectiles.end(), mEProjectiles[i]), mEProjectiles.end());
+	//	}
+	//}
+
+	//for (ExplosionVector::size_type i = 0; i < mExplosions.size(); i++)
+	//{
+	//	mExplosions[i]->update();
+
+	//	if (mExplosions[i]->mIsAlive == false)
+	//	{
+	//		//Remove explosion image after timer ends
+	//		mExplosions.erase(std::remove(mExplosions.begin(), mExplosions.end(), mExplosions[i]), mExplosions.end());
+	//	}
+	//}
 }
 
 void Game::render()
 {
-	for (EnemyVector::size_type i = 0; i < mEnemies.size(); i++)
+	for (EntityVector::iterator i = mEntities.begin(); i != mEntities.end(); i++)
 	{
-		mEnemies[i]->render();
+		Entity *entity = *i;
+		entity->render();
 	}
-
-	for (ExplosionVector::size_type i = 0; i < mExplosions.size(); i++)
-	{
-		mExplosions[i]->render();
-	}
-
-	for (EntityVector::size_type i = 0; i < mEProjectiles.size(); i++)
-	{
-		mEProjectiles[i]->render();
-	}
-	ship->render();
 }
 
 void Game::addEnemies()
@@ -297,34 +290,65 @@ void Game::addEnemies()
 	//Randomize starting position and starting direction
 	int posX = VGCRandomizer::getInt(0 + 16, VGCDisplay::getWidth() - 16);
 	int direction = VGCRandomizer::getInt(0, 1);
+	VGCVector pos(posX, -20);
+	VGCRectangle rect(pos, 0, 0);
+	float bulletCD(0.0f);
 
 	//Add enemies
 	if (spawnTimer == 0.0f)
 	{
-		mEnemies.push_back(new Enemy(VGCVector(posX, -20), VGCRectangle(VGCVector(0, 0), 0, 0), direction, 0.0f));
+		mEntities.push_back(new Enemy(pos, rect, direction, bulletCD));
 	}
 
 	VGCRandomizer::finalizeRandomizer();
 }
 
+void Game::removeDeadEntities()
+{
+	//Remove each entity that returns isAlive() = false
+	EntityVector entities;
+	for (EntityVector::iterator i = mEntities.begin(); i != mEntities.end(); i++)
+	{
+		Entity *entity = *i;
+		if (entity->isAlive())
+		{
+			entities.push_back(entity);
+		}
+		else
+		{
+			delete entity;
+		}
+	}
+	mEntities = entities;
+}
+
+bool Game::isOverlap(Entity *entity0, Entity *entity1)
+{
+	//Collision using pythagoras theorem
+	const VGCVector position0 = entity0->getPosition();
+	const int X0 = position0.getX();
+	const int Y0 = position0.getY();
+	const int R0 = entity0->getRadius();
+
+	const VGCVector position1 = entity1->getPosition();
+	const int X1 = position1.getX();
+	const int Y1 = position1.getY();
+	const int R1 = entity1->getRadius();
+
+	const int DX = X0 - X1;
+	const int DY = Y0 - Y1;
+
+	return (DX * DX) + (DY * DY) < (R0 + R1) * (R0 + R1);
+}
+
 void Game::destroy()
 {
 	//Remove all objects before closing application
-	delete ship;
+	//delete ship;
 	delete menu;
-	while (!mEnemies.empty())
+	while (!mEntities.empty())
 	{
-		delete mEnemies.back();
-		mEnemies.pop_back();
-	}
-	while (!mEProjectiles.empty())
-	{
-		delete mEProjectiles.back();
-		mEProjectiles.pop_back();
-	}
-	while (!mExplosions.empty())
-	{
-		delete mExplosions.back();
-		mExplosions.pop_back();
+		delete mEntities.back();
+		mEntities.pop_back();
 	}
 }

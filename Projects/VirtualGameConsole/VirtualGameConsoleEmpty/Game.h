@@ -23,23 +23,33 @@ private:
 	void render();
 	void addEnemies();
 	void destroy();
+	void removeDeadEntities();
 	void handleStates();
 	void menuHandler();
 	void loadShip();
 
+	bool isOverlap(Entity *entity0, Entity *entity1);
+
+	//Ship reference
+	Ship *ship;
+
+	//Menu reference
+	Menu *menu;
+
 	typedef std::vector<Entity*> EntityVector;
-	typedef std::vector<Bullet*> ProjectileVector;
+	EntityVector mEntities;
+	//typedef std::vector<Bullet*> ProjectileVector;
 
-	ProjectileVector mEProjectiles;
+	//ProjectileVector mEProjectiles;
 
-	typedef std::vector<Enemy*> EnemyVector;
-	EnemyVector mEnemies;
+	//typedef std::vector<Enemy*> EnemyVector;
+	//EnemyVector mEnemies;
 
 	float spawnTimer;
 	float spawnInterval;
 
-	typedef std::vector<Explosion*> ExplosionVector;
-	ExplosionVector mExplosions;
+	//typedef std::vector<Explosion*> ExplosionVector;
+	//ExplosionVector mExplosions;
 
 	enum GameState
 	{

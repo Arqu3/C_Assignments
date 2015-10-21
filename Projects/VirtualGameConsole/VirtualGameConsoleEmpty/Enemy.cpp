@@ -1,7 +1,4 @@
 #include "Enemy.h"
-#include <string>
-#include <algorithm>
-#include "Bullet.h"
 
 using namespace std;
 
@@ -13,20 +10,24 @@ static VGCImage image;
 static int width;
 static int height;
 
-Enemy::Enemy(VGCVector Position, VGCRectangle Rectangle, int WDirection, float BulletCD) :
+Enemy::Enemy(VGCVector &Position, VGCRectangle &Rectangle, int &WDirection, float BulletCD) :
+	Entity(),
 	mPosition(Position),
 	mDirection(WDirection),
 	mBulletCD(BulletCD),
-	mIsVisible(true)
+	mDamage(10),
+	mRadius(16)
+	//mIsVisible(true)
 {
 	mRectangle = Rectangle;
 }
 
 Enemy::~Enemy()
 {
+
 }
 
-void Enemy::update()
+void Enemy::update(EntityVector &entities)
 {
 	move();
 
@@ -34,7 +35,14 @@ void Enemy::update()
 
 	cdTick();
 
+	addBullet(entities);
+
 	visibilityCheck();
+
+	if (!isAlive())
+	{
+		addExplosion(entities);
+	}
 }
 
 void Enemy::render()
@@ -57,15 +65,11 @@ void Enemy::finalize()
 bool Enemy::visibilityCheck()
 {
 	//If outside lower screen boundary, set to not alive
-	if (mPosition.getY() > VGCDisplay::getHeight())
+	if (mPosition.getY() > VGCDisplay::getHeight() + height)
 	{
-		mIsVisible = false;
+		mIsAlive = false;
 	}
-	else
-	{
-		mIsVisible = true;
-	}
-	return mIsVisible;
+	return mIsAlive;
 }
 
 void Enemy::setDead()
@@ -90,9 +94,30 @@ bool Enemy::canAddBullet()
 	}
 }
 
+void Enemy::addBullet(EntityVector &entites)
+{
+	VGCVector direction(0, 1);
+	VGCRectangle rect(mPosition, 0, 0);
+
+	if (canAddBullet())
+	{
+		entites.push_back(new Bullet(mPosition, rect, direction));
+	}
+}
+
 VGCVector Enemy::getPosition()
 {
 	return mPosition;
+}
+
+int Enemy::getDamage()
+{
+	return mDamage;
+}
+
+int Enemy::getRadius()
+{
+	return mRadius;
 }
 
 void Enemy::cdTick()
@@ -147,4 +172,10 @@ void Enemy::setRectangle()
 	mRectangle.setPosition(mPosition);
 	mRectangle.setHeight(height);
 	mRectangle.setWidth(width);
+}
+
+void Enemy::addExplosion(EntityVector &entities)
+{
+	float timer = 100.0f;
+	entities.push_back(new Explosion(mPosition, timer));
 }

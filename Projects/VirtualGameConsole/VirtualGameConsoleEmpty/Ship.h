@@ -4,35 +4,38 @@
 #include "Entity.h"
 #include "VGCVirtualGameConsole.h"
 #include "Bullet.h"
+#include <string>
+#include <algorithm>
 
 
 class Ship : public Entity
 {
 public:
-	Ship();
+	Ship(VGCVector &Position);
 	 ~Ship();
-	void update();
+	void update(EntityVector &entities);
 	void render();
 	static void initialize();
 	static void finalize();
 	bool isAlive();
+	int getDamage();
+	int getRadius();
+	VGCVector getPosition();
 	void takeDMG(int dmg);
 	void addScore();
 
-	typedef std::vector<Entity*> EntityVector;
-	EntityVector Projectiles;
-
 private:
 	VGCVector mPosition;
+	int mDamage;
+	int mRadius;
 	float mBulletCD;
 	int mHealth;
 	int mScore;
+	//EntityVector mEntities;
 
-	void addBullet();
-	void updateBullet();
+	void addBullet(EntityVector &entities);
 	void move();
 	void setRectangle();
-	void renderBullet();
 	void renderText();
 };
 
