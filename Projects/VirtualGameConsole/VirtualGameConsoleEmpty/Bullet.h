@@ -7,14 +7,17 @@
 class Bullet : public Entity
 {
 public:
-	Bullet(VGCVector &Position, VGCRectangle &Rectangle, VGCVector &Direction);
+	Bullet(Type &Type, VGCVector &Position, VGCVector &Direction);
 	~Bullet();
 	void update(EntityVector &entities);
 	void render();
 	bool isAlive();
+	void takeDMG();
 	int getDamage();
 	int getRadius();
+	int getScore();
 	VGCVector getPosition();
+	Type getType();
 	static void initialize();
 	static void finalize();
 
@@ -22,6 +25,7 @@ public:
 private:
 	VGCVector mPosition;
 	VGCVector mDirection;
+	Type mType;
 	int mDamage;
 	int mRadius;
 	void visibilityCheck();

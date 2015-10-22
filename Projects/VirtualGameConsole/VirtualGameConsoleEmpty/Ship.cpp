@@ -24,9 +24,12 @@ Ship::Ship(VGCVector &Position) :
 	mHealth(100),
 	mScore(0),
 	mBulletCD(0.0f),
-	mDamage(1),
-	mRadius(16)
+	mDamage(0),
+	mRadius(16),
+	mType(FRIEND),
+	damageTaken(0)
 {
+	mIsBullet = false;
 }
 
 
@@ -37,8 +40,6 @@ Ship::~Ship()
 void Ship::update(EntityVector &entities)
 {
 	move();
-
-	setRectangle();
 
 	//Set shoot timer
 	mBulletCD++;
@@ -71,14 +72,24 @@ bool Ship::isAlive()
 	return mIsAlive;
 }
 
-void Ship::takeDMG(int dmg)
+void Ship::takeDMG()
 {
-	mHealth -= dmg;
+	mHealth -= damageTaken;
 }
 
-void Ship::addScore()
+void Ship::addScore(int score)
 {
-	mScore += 1;
+	mScore += score;
+}
+
+Ship::Type Ship::getType()
+{
+	return mType;
+}
+
+int Ship::getScore()
+{
+	return 0;
 }
 
 void Ship::move()
@@ -131,14 +142,6 @@ void Ship::move()
 	mPosition.setY(y);
 }
 
-void Ship::setRectangle()
-{
-	//Set rectangle
-	mRectangle.setPosition(mPosition);
-	mRectangle.setHeight(height);
-	mRectangle.setWidth(width);
-}
-
 int Ship::getDamage()
 {
 	return mDamage;
@@ -156,19 +159,17 @@ VGCVector Ship::getPosition()
 
 void Ship::addBullet(EntityVector &entities)
 {
-	VGCRectangle rect(mPosition, 0, 0);
-
 	//Middle
 	VGCVector directionM(0, -1);
-	entities.push_back(new Bullet(mPosition, rect, directionM));
+	entities.push_back(new Bullet(mType, mPosition, directionM));
 	
 	//Right
 	VGCVector directionR(1, -1);
-	entities.push_back(new Bullet(mPosition, rect, directionR));
+	entities.push_back(new Bullet(mType, mPosition, directionR));
 	
 	//Left
 	VGCVector directionL(-1, -1);
-	entities.push_back(new Bullet(mPosition, rect, directionL));
+	entities.push_back(new Bullet(mType, mPosition, directionL));
 }
 
 void Ship::render()
@@ -177,7 +178,7 @@ void Ship::render()
 	VGCAdjustment adjustment(0.5, 0.5);
 	VGCDisplay::renderImage(image, index, mPosition, adjustment);
 
-	renderText();
+	//renderText();
 }
 
 void Ship::renderText()

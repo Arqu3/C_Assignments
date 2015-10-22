@@ -7,13 +7,14 @@ static const int speed = 6;
 static string fileName = "Bullet.png";
 static VGCImage image;
 
-Bullet::Bullet(VGCVector &Position, VGCRectangle &Rectangle, VGCVector &Direction) :
+Bullet::Bullet(Type &Type, VGCVector &Position, VGCVector &Direction) :
 	mPosition(Position),
 	mDirection(Direction),
 	mDamage(5),
-	mRadius(3)
+	mRadius(3),
+	mType(Type)
 {
-	mRectangle = Rectangle;
+	mIsBullet = true;
 }
 
 
@@ -39,11 +40,6 @@ void Bullet::update(EntityVector &entities)
 	//Set position
 	mPosition.setY(y);
 	mPosition.setX(x);
-
-	//Set rectangle
-	mRectangle.setPosition(mPosition);
-	mRectangle.setWidth(VGCDisplay::getWidth(image));
-	mRectangle.setHeight(VGCDisplay::getHeight(image));
 
 	//Check visibility
 	visibilityCheck();
@@ -94,6 +90,21 @@ int Bullet::getRadius()
 VGCVector Bullet::getPosition()
 {
 	return mPosition;
+}
+
+Bullet::Type Bullet::getType()
+{
+	return mType;
+}
+
+int Bullet::getScore()
+{
+	return 0;
+}
+
+void Bullet::takeDMG()
+{
+	mIsAlive = false;
 }
 
 float Bullet::clamp(float n, float lower, float upper)

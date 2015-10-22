@@ -10,16 +10,16 @@ static VGCImage image;
 static int width;
 static int height;
 
-Enemy::Enemy(VGCVector &Position, VGCRectangle &Rectangle, int &WDirection, float BulletCD) :
+Enemy::Enemy(VGCVector &Position, int &WDirection, float BulletCD) :
 	Entity(),
 	mPosition(Position),
 	mDirection(WDirection),
 	mBulletCD(BulletCD),
 	mDamage(10),
-	mRadius(16)
-	//mIsVisible(true)
+	mRadius(16),
+	mType(ENEMY)
 {
-	mRectangle = Rectangle;
+	mIsBullet = false;
 }
 
 Enemy::~Enemy()
@@ -29,20 +29,18 @@ Enemy::~Enemy()
 
 void Enemy::update(EntityVector &entities)
 {
-	move();
+	if (!isAlive())
+	{
+		addExplosion(entities);
+	}
 
-	setRectangle();
+	move();
 
 	cdTick();
 
 	addBullet(entities);
 
 	visibilityCheck();
-
-	if (!isAlive())
-	{
-		addExplosion(entities);
-	}
 }
 
 void Enemy::render()
@@ -97,11 +95,9 @@ bool Enemy::canAddBullet()
 void Enemy::addBullet(EntityVector &entites)
 {
 	VGCVector direction(0, 1);
-	VGCRectangle rect(mPosition, 0, 0);
-
 	if (canAddBullet())
 	{
-		entites.push_back(new Bullet(mPosition, rect, direction));
+		entites.push_back(new Bullet(mType, mPosition, direction));
 	}
 }
 
@@ -118,6 +114,21 @@ int Enemy::getDamage()
 int Enemy::getRadius()
 {
 	return mRadius;
+}
+
+Enemy::Type Enemy::getType()
+{
+	return mType;
+}
+
+int Enemy::getScore()
+{
+	return 10;
+}
+
+void Enemy::takeDMG()
+{
+	mIsAlive = false;
 }
 
 void Enemy::cdTick()
@@ -163,19 +174,7 @@ void Enemy::move()
 	mPosition.setY(y);
 }
 
-void Enemy::setRectangle()
-{
-	width = VGCDisplay::getWidth(image);
-	height = VGCDisplay::getHeight(image);
-
-	//Set rectangle
-	mRectangle.setPosition(mPosition);
-	mRectangle.setHeight(height);
-	mRectangle.setWidth(width);
-}
-
 void Enemy::addExplosion(EntityVector &entities)
 {
-	float timer = 100.0f;
-	entities.push_back(new Explosion(mPosition, timer));
+	entities.push_back(new Explosion(mPosition));
 }

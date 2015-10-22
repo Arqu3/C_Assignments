@@ -5,12 +5,13 @@ using namespace std;
 static VGCImage image;
 static string fileName = "Explosion.png";
 
-Explosion::Explosion(VGCVector &Position, float Timer) :
+Explosion::Explosion(VGCVector &Position) :
 	mPosition(Position),
-	mTimer(Timer),
+	mTimer(50.0f),
 	mDamage(0),
 	mRadius(16)
 {
+	mIsBullet = false;
 }
 
 Explosion::~Explosion()
@@ -61,4 +62,18 @@ int Explosion::getRadius()
 VGCVector Explosion::getPosition()
 {
 	return mPosition;
+}
+
+Explosion::Type Explosion::getType()
+{
+	return FRIEND;
+}
+
+int Explosion::getScore()
+{
+	return 0;
+}
+
+void Explosion::takeDMG()
+{
 }

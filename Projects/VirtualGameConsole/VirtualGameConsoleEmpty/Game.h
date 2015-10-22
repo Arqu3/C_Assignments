@@ -24,9 +24,10 @@ private:
 	void addEnemies();
 	void destroy();
 	void removeDeadEntities();
+	void detectCollisions();
 	void handleStates();
 	void menuHandler();
-	void loadShip();
+	void load();
 
 	bool isOverlap(Entity *entity0, Entity *entity1);
 

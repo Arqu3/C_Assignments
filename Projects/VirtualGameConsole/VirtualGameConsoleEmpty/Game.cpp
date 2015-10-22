@@ -59,23 +59,24 @@ void Game::start()
 			switch (mCurrentState)
 			{
 			case MainMenu:
-				//Insert Menu rendering
+				//Menu rendering
 				menu->renderMainMenu();
 				break;
 
 			case InGame:
 				//Update entities
+				detectCollisions();
 				update();
 				removeDeadEntities();
 				break;
 
 			case Paused:
-				//Insert Pause rendering
+				//Pause rendering
 				menu->renderPause();
 				break;
 
 			case Over:
-				//Insert Game over rendering
+				//Game over rendering
 				menu->renderGameOver();
 				break;
 			}
@@ -111,8 +112,8 @@ void Game::handleStates()
 		//Reload game when pressing R
 		if (VGCKeyboard::wasPressed(VGCKey::R_KEY))
 		{
-			destroy();
-			loadShip();
+			//destroy();
+			load();
 			mCurrentState = InGame;
 		}
 	}
@@ -140,8 +141,6 @@ void Game::handleStates()
 	{
 		if (VGCKeyboard::wasPressed(VGCKey::Q_KEY))
 		{
-			//Remove all objects on exit
-			destroy();
 			//Create new menu
 			menu = new Menu();
 			mCurrentState = MainMenu;
@@ -158,7 +157,7 @@ void Game::menuHandler()
 		if (VGCKeyboard::wasPressed(VGCKey::RETURN_KEY))
 		{
 			//Load new ship on startup
-			loadShip();
+			load();
 			mCurrentState = InGame;
 		}
 		//Close program when pressing Escape
@@ -170,14 +169,20 @@ void Game::menuHandler()
 
 }
 
-void Game::loadShip()
+void Game::load()
 {
+	//Empty vector before loading new ship
+	while (!mEntities.empty())
+	{
+		mEntities.pop_back();
+	}
 	ship = new Ship(VGCVector(VGCDisplay::getWidth() / 2, VGCDisplay::getHeight() / 2));
 	mEntities.push_back(ship);
 }
 
 void Game::update()
 {
+	//Update all entities
 	EntityVector entities(mEntities);
 	for (EntityVector::iterator i = entities.begin(); i != entities.end(); i++)
 	{
@@ -185,100 +190,25 @@ void Game::update()
 		entity->update(mEntities);
 	}
 
+	//Add enemies
 	addEnemies();
-
-	////Update ship
-	//ship->update();
-
-	////Add enemies
-	//addEnemies();
-
-	//for (EnemyVector::size_type j = 0; j < mEnemies.size(); j++)
-	//{
-	//	//Update enemies
-	//	mEnemies[j]->update();
-
-	//	for (EntityVector::size_type i = 0; i < ship->Projectiles.size(); i++)
-	//	{
-	//		if (mEnemies[j]->mRectangle.isInside(ship->Projectiles[i]->mRectangle.getPosition()))
-	//		{
-	//			//Remove bullet and enemy if they collide
-	//			mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
-	//			ship->Projectiles[i]->mIsAlive = false;
-	//			mEnemies[j]->setDead();
-	//		}
-	//	}
-
-	//	if (ship->mRectangle.isInside(mEnemies[j]->mRectangle.getPosition()))
-	//	{
-	//		//Remove enemy and player health if player and enemy collide
-	//		ship->takeDMG(10);
-	//		mExplosions.push_back(new Explosion(mEnemies[j]->getPosition(), 30));
-	//		mEnemies[j]->setDead();
-	//	}
-
-	//	if (mEnemies[j]->canAddBullet())
-	//	{
-	//		//Add enemy bullets
-	//		mEProjectiles.push_back(new Bullet(mEnemies[j]->getPosition(), VGCRectangle(VGCVector(0, 0), 0, 0), VGCVector(0, 1)));
-	//	}
-
-	//	if (!mEnemies[j]->isAlive())
-	//	{
-	//		//If enemy isn't alive, remove and add score to player
-	//		ship->addScore();
-	//		mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
-	//		break;
-	//	}
-	//	if (!mEnemies[j]->visibilityCheck())
-	//	{
-	//		//If enemy is outside screen, remove it
-	//		mEnemies.erase(std::remove(mEnemies.begin(), mEnemies.end(), mEnemies[j]), mEnemies.end());
-	//		break;
-	//	}
-	//}
-
-	//for (ProjectileVector::size_type i = 0; i < mEProjectiles.size(); i++)
-	//{
-	//	mEProjectiles[i]->update();
-
-	//	if (ship->mRectangle.isInside(mEProjectiles[i]->mRectangle.getPosition()))
-	//	{
-	//		//Remove player health and projectile if they collide
-	//		ship->takeDMG(5);
-	//		mEProjectiles[i]->mIsAlive = false;
-	//	}
-
-	//	if (mEProjectiles[i]->mIsAlive == false)
-	//	{
-	//		//If projectile isn't alive, remove it
-	//		mEProjectiles.erase(std::remove(mEProjectiles.begin(), mEProjectiles.end(), mEProjectiles[i]), mEProjectiles.end());
-	//	}
-	//}
-
-	//for (ExplosionVector::size_type i = 0; i < mExplosions.size(); i++)
-	//{
-	//	mExplosions[i]->update();
-
-	//	if (mExplosions[i]->mIsAlive == false)
-	//	{
-	//		//Remove explosion image after timer ends
-	//		mExplosions.erase(std::remove(mExplosions.begin(), mExplosions.end(), mExplosions[i]), mExplosions.end());
-	//	}
-	//}
 }
 
 void Game::render()
 {
+	//Render all entities
 	for (EntityVector::iterator i = mEntities.begin(); i != mEntities.end(); i++)
 	{
 		Entity *entity = *i;
 		entity->render();
 	}
+	//Render UI last
+	ship->renderText();
 }
 
 void Game::addEnemies()
 {
+	//Timer tick and reset
 	spawnTimer++;
 	if (spawnTimer >= spawnInterval)
 	{
@@ -291,13 +221,12 @@ void Game::addEnemies()
 	int posX = VGCRandomizer::getInt(0 + 16, VGCDisplay::getWidth() - 16);
 	int direction = VGCRandomizer::getInt(0, 1);
 	VGCVector pos(posX, -20);
-	VGCRectangle rect(pos, 0, 0);
 	float bulletCD(0.0f);
 
 	//Add enemies
 	if (spawnTimer == 0.0f)
 	{
-		mEntities.push_back(new Enemy(pos, rect, direction, bulletCD));
+		mEntities.push_back(new Enemy(pos, direction, bulletCD));
 	}
 
 	VGCRandomizer::finalizeRandomizer();
@@ -316,10 +245,47 @@ void Game::removeDeadEntities()
 		}
 		else
 		{
-			delete entity;
+			if (entity != ship)
+			{
+				delete entity;
+			}
 		}
 	}
 	mEntities = entities;
+}
+
+void Game::detectCollisions()
+{
+	EntityVector entities(mEntities);
+	for (EntityVector::size_type i = 0; i < entities.size(); i++)
+	{
+		Entity *entity0 = entities[i];
+		for (EntityVector::size_type j = i + 1; j < entities.size(); j++)
+		{
+			Entity *entity1 = entities[j];
+			//If entities overlap & they don't share type or are bullets
+			if (isOverlap(entity0, entity1) 
+				&& entity0->getType() != entity1->getType())
+			{
+				//Enemy + Ship collision
+				if (entity0->mIsBullet == false && entity1->mIsBullet == false)
+				{
+					ship->damageTaken = entity0->getDamage() + entity1->getDamage();
+					entity0->takeDMG();
+					entity1->takeDMG();
+					ship->addScore(entity0->getScore() + entity1->getScore());
+				}
+				//Enemy + Bullet or Ship + Bullet collision
+				if (entity0->mIsBullet != entity1->mIsBullet)
+				{
+					ship->damageTaken = entity0->getDamage() + entity1->getDamage();
+					entity0->takeDMG();
+					entity1->takeDMG();
+					ship->addScore(entity0->getScore() + entity1->getScore());
+				}
+			}
+		}
+	}
 }
 
 bool Game::isOverlap(Entity *entity0, Entity *entity1)
@@ -344,7 +310,6 @@ bool Game::isOverlap(Entity *entity0, Entity *entity1)
 void Game::destroy()
 {
 	//Remove all objects before closing application
-	//delete ship;
 	delete menu;
 	while (!mEntities.empty())
 	{

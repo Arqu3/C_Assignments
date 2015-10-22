@@ -15,14 +15,18 @@ public:
 	 ~Ship();
 	void update(EntityVector &entities);
 	void render();
+	void renderText();
 	static void initialize();
 	static void finalize();
 	bool isAlive();
 	int getDamage();
 	int getRadius();
+	int getScore();
 	VGCVector getPosition();
-	void takeDMG(int dmg);
-	void addScore();
+	Type getType();
+	void takeDMG();
+	int damageTaken;
+	void addScore(int score);
 
 private:
 	VGCVector mPosition;
@@ -31,12 +35,10 @@ private:
 	float mBulletCD;
 	int mHealth;
 	int mScore;
-	//EntityVector mEntities;
+	Type mType;
 
 	void addBullet(EntityVector &entities);
 	void move();
-	void setRectangle();
-	void renderText();
 };
 
 #endif

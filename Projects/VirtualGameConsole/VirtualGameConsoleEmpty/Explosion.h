@@ -8,7 +8,7 @@
 class Explosion : public Entity
 {
 public:
-	Explosion(VGCVector &Position, float Timer);
+	Explosion(VGCVector &Position);
 	~Explosion();
 
 	static void initialize();
@@ -17,9 +17,13 @@ public:
 	void render();
 	void update(EntityVector &entities);
 	bool isAlive();
+	void takeDMG();
 	int getDamage();
 	int getRadius();
+	int getScore();
 	VGCVector getPosition();
+	Type getType();
+
 
 private:
 	VGCVector mPosition;

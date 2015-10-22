@@ -11,16 +11,19 @@
 class Enemy : public Entity
 {
 public:
-	Enemy(VGCVector &Position, VGCRectangle &Rectangle, int &WDirection, float bulletCD);
+	Enemy(VGCVector &Position, int &WDirection, float bulletCD);
 	~Enemy();
 	void update(EntityVector &entities);
 	void render();
 	VGCVector getPosition();
 	void setDead();
 	bool isAlive();
+	void takeDMG();
+
 	int getDamage();
 	int getRadius();
-	VGCVector getPosition();
+	int getScore();
+	Type getType();
 	static void initialize();
 	static void finalize();
 
@@ -30,12 +33,11 @@ private:
 	int mDirection;
 	int mDamage;
 	int mRadius;
-	//bool mIsVisible;
+	Type mType;
 
 	bool visibilityCheck();
 	bool canAddBullet();
 	void move();
-	void setRectangle();
 	void cdTick();
 	void addBullet(EntityVector &entities);
 	void addExplosion(EntityVector &entities);
