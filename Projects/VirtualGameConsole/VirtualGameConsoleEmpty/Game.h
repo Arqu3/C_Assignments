@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "VGCVirtualGameConsole.h"
-#include <algorithm>
 #include "Ship.h"
 #include "Bullet.h"
 #include "Enemy.h"
@@ -39,18 +38,9 @@ private:
 
 	typedef std::vector<Entity*> EntityVector;
 	EntityVector mEntities;
-	//typedef std::vector<Bullet*> ProjectileVector;
-
-	//ProjectileVector mEProjectiles;
-
-	//typedef std::vector<Enemy*> EnemyVector;
-	//EnemyVector mEnemies;
 
 	float spawnTimer;
 	float spawnInterval;
-
-	//typedef std::vector<Explosion*> ExplosionVector;
-	//ExplosionVector mExplosions;
 
 	enum GameState
 	{

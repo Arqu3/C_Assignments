@@ -177,8 +177,6 @@ void Ship::render()
 	VGCVector index(0, 0);
 	VGCAdjustment adjustment(0.5, 0.5);
 	VGCDisplay::renderImage(image, index, mPosition, adjustment);
-
-	//renderText();
 }
 
 void Ship::renderText()

@@ -5,7 +5,6 @@
 #include "VGCVirtualGameConsole.h"
 #include "Bullet.h"
 #include <string>
-#include <algorithm>
 
 
 class Ship : public Entity

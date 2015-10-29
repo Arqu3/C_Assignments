@@ -6,7 +6,6 @@
 #include "Bullet.h"
 #include "Explosion.h"
 #include <string>
-#include <algorithm>
 
 class Enemy : public Entity
 {

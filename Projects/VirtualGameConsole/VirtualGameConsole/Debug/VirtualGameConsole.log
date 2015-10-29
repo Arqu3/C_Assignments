@@ -1,24 +1,33 @@
-﻿Build started 21/10/2015 14:42:49.
-     1>Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2015-10-29 23:25:54.
+     1>Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt VGCAdjustment.cpp VGCAssert.cpp VGCBootstrap.cpp VGCBus.cpp VGCClock.cpp VGCError.cpp VGCHandler.cpp VGCKey.cpp VGCKeyboard.cpp VGCMessage.cpp VGCRandomizer.cpp VGCReferenced.cpp VGCTimerImp.cpp VGCWindow.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt VGCAdjustment.cpp VGCAssert.cpp VGCBootstrap.cpp VGCBus.cpp VGCClock.cpp VGCColor.cpp VGCDisplay.cpp VGCError.cpp VGCFontImp.cpp VGCGDIPlus.cpp VGCHandler.cpp VGCImageImp.cpp VGCKey.cpp VGCKeyboard.cpp VGCMessage.cpp VGCRandomizer.cpp VGCRectangle.cpp VGCReferenced.cpp VGCTimerImp.cpp VGCVector.cpp VGCVirtualGameConsole.cpp VGCWindow.cpp
+         VGCVirtualGameConsole.cpp
+         VGCVector.cpp
+         VGCRectangle.cpp
+         VGCImageImp.cpp
+         VGCGDIPlus.cpp
+         VGCFontImp.cpp
+         VGCDisplay.cpp
+         VGCColor.cpp
+         Generating Code...
          Skipping... (no relevant changes detected)
-         VGCWindow.cpp
-         VGCTimerImp.cpp
          VGCReferenced.cpp
          VGCRandomizer.cpp
          VGCMessage.cpp
          VGCKeyboard.cpp
          VGCKey.cpp
          VGCHandler.cpp
-         VGCError.cpp
          VGCClock.cpp
          VGCBus.cpp
+         VGCAdjustment.cpp
+         VGCWindow.cpp
+         VGCTimerImp.cpp
+         VGCError.cpp
          VGCBootstrap.cpp
          VGCAssert.cpp
-         VGCAdjustment.cpp
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Debug\VirtualGameConsole.lib" /NOLOGO Debug\VGCAdjustment.obj
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"Debug\VirtualGameConsole.lib" /NOLOGO Debug\VGCAdjustment.obj
          Debug\VGCAssert.obj
          Debug\VGCBootstrap.obj
          Debug\VGCBus.obj
@@ -40,9 +49,9 @@
          Debug\VGCVector.obj
          Debug\VGCVirtualGameConsole.obj
          Debug\VGCWindow.obj
-         VirtualGameConsole.vcxproj -> C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
-     1>Done Building Project "C:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
+         VirtualGameConsole.vcxproj -> D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
+     1>Done Building Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\VirtualGameConsole.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.55
+Time Elapsed 00:00:05.72

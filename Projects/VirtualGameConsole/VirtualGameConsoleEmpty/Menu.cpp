@@ -9,7 +9,6 @@ Menu::Menu() :
 	mBlinkTimer(0.0f),
 	mIsvisible(true)
 {
-
 }
 
 Menu::~Menu()
