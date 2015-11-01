@@ -30,6 +30,7 @@ void Explosion::finalize()
 
 void Explosion::update(EntityVector &entities)
 {
+	//Set to not alive if timer has run out
 	mTimer--;
 	if (mTimer <= 0)
 	{

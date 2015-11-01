@@ -1,34 +1,9 @@
-﻿Build started 2015-10-29 23:25:59.
+﻿Build started 2015-10-30 12:58:20.
      1>Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsoleEmpty\VirtualGameConsoleEmpty.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\VirtualGameConsole\ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Bullet.cpp Enemy.cpp Entity.cpp Explosion.cpp Game.cpp Main.cpp Menu.cpp Ship.cpp
-         Ship.cpp
-         Menu.cpp
-         Main.cpp
-         Game.cpp
-         Explosion.cpp
-         Entity.cpp
-         Enemy.cpp
-         Bullet.cpp
-     1>d:\users\ludwig\documents\github\c_assignments\projects\virtualgameconsole\virtualgameconsoleempty\bullet.cpp(33): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
-     1>d:\users\ludwig\documents\github\c_assignments\projects\virtualgameconsole\virtualgameconsoleempty\bullet.cpp(33): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>d:\users\ludwig\documents\github\c_assignments\projects\virtualgameconsole\virtualgameconsoleempty\bullet.cpp(33): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>d:\users\ludwig\documents\github\c_assignments\projects\virtualgameconsole\virtualgameconsoleempty\bullet.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>d:\users\ludwig\documents\github\c_assignments\projects\virtualgameconsole\virtualgameconsoleempty\bullet.cpp(37): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-         Generating Code...
-       Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\Debug\VirtualGameConsoleEmpty.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\Debug\VirtualGameConsoleEmpty.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\Debug\VirtualGameConsoleEmpty.lib" /MACHINE:X86 Debug\Bullet.obj
-         Debug\Enemy.obj
-         Debug\Entity.obj
-         Debug\Explosion.obj
-         Debug\Game.obj
-         Debug\Main.obj
-         Debug\Menu.obj
-         Debug\Ship.obj
-         D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsole\Debug\VirtualGameConsole.lib
+     1>Link:
          VirtualGameConsoleEmpty.vcxproj -> D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\Debug\VirtualGameConsoleEmpty.exe
      1>Done Building Project "D:\Users\Ludwig\Documents\GitHub\C_Assignments\Projects\VirtualGameConsole\VirtualGameConsoleEmpty\VirtualGameConsoleEmpty.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.49
+Time Elapsed 00:00:00.08

@@ -31,6 +31,7 @@ void Enemy::update(EntityVector &entities)
 {
 	if (!isAlive())
 	{
+		//Check at beginning of each frame if about to die, if true add explosion
 		addExplosion(entities);
 	}
 
@@ -97,6 +98,7 @@ void Enemy::addBullet(EntityVector &entites)
 	VGCVector direction(0, 1);
 	if (canAddBullet())
 	{
+		//Add bullet when possible
 		entites.push_back(new Bullet(mType, mPosition, direction));
 	}
 }
@@ -144,7 +146,6 @@ void Enemy::cdTick()
 void Enemy::move()
 {
 	width = VGCDisplay::getWidth(image);
-	height = VGCDisplay::getHeight(image);
 
 	int x = mPosition.getX();
 	int y = mPosition.getY();
