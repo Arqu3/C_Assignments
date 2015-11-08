@@ -78,7 +78,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Die.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mug.cpp" />
+    <ClCompile Include="OddDie.cpp" />
+    <ClCompile Include="StandardDie.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Die.h" />
+    <ClInclude Include="Mug.h" />
+    <ClInclude Include="OddDie.h" />
+    <ClInclude Include="StandardDie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
