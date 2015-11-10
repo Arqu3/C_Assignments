@@ -15,6 +15,7 @@ public:
 
 	virtual Type getType() = 0;
 	virtual void output() = 0;
+	virtual int getStat() = 0;
 };
 
 #endif

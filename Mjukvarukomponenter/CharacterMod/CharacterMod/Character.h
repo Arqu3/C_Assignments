@@ -2,6 +2,7 @@
 #define INCLUDED_CHARACTER
 
 #include "CharacterComponent.h"
+#include "BadItemDecorator.h"
 #include <vector>
 #include <iostream>
 
@@ -16,6 +17,7 @@ public:
 private:
 	typedef std::vector<CharacterComponent*> CCVector;
 	CCVector mComponents;
+	void internalClear();
 };
 
 #endif

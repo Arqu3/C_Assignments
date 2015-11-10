@@ -9,11 +9,7 @@ mComponents()
 
 Character::~Character()
 {
-	while (!mComponents.empty())
-	{
-		delete mComponents.back();
-		mComponents.pop_back();
-	}
+	internalClear();
 }
 
 void Character::add(CharacterComponent *CC)
@@ -26,5 +22,15 @@ void Character::output()
 	for (CCVector::size_type i = 0; i < mComponents.size(); i++)
 	{
 		mComponents[i]->output();
+		cout << endl;
+	}
+}
+
+void Character::internalClear()
+{
+	while (!mComponents.empty())
+	{
+		delete mComponents.back();
+		mComponents.pop_back();
 	}
 }

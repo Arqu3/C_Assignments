@@ -1,21 +1,24 @@
 #ifndef INCLUDED_ITEM
 #define INCLUDED_ITEM
 
-#include "Decorator.h"
+#include "CharacterComponent.h"
 #include <string>
+#include <iostream>
 
-class Item : public Decorator
+class Item : public CharacterComponent
 {
 public:
-	Item(Item::Type type, std::string name);
+	Item(Item::Type type, std::string name, int stat);
 
-	Type getType();
-	void output();
+	virtual Type getType();
+	virtual void output();
+
+	virtual int getStat();
 
 private:
-
 	Type mType;
 	std::string mName;
+	int mStat;
 };
 
 #endif

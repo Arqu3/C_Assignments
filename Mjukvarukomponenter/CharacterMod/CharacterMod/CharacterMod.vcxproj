@@ -78,16 +78,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BadItemDecorator.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterComponent.cpp" />
-    <ClCompile Include="Decorator.cpp" />
+    <ClCompile Include="GoodItemDecorator.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BadItemDecorator.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterComponent.h" />
-    <ClInclude Include="Decorator.h" />
+    <ClInclude Include="GoodItemDecorator.h" />
     <ClInclude Include="Item.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
