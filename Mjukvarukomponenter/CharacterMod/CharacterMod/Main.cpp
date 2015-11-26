@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include "Character.h"
-#include "CharacterComponent.h"
 #include "GoodItemDecorator.h"
 #include "BadItemDecorator.h"
 #include "Item.h"
