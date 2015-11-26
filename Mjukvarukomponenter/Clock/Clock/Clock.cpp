@@ -87,7 +87,7 @@ void Clock::updateTime()
 		mSec = 0;
 	}
 
-	if (mMin >= 59)
+	if (mMin >= 60)
 	{
 		mHour++;
 		mMin = 0;

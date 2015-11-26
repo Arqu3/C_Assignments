@@ -12,7 +12,7 @@ int main()
 	clock.setDay(2);
 	clock.setHour(23);
 	clock.setSecond(55);
-	clock.setMinute(37);
+	clock.setMinute(59);
 
 	clock.output();
 
