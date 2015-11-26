@@ -6,7 +6,7 @@
 class Square : public Shape
 {
 public:
-	Square(int x, int y);
+	Square(int width, int height);
 	~Square();
 
 	void CalculateArea();

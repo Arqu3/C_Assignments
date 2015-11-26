@@ -2,9 +2,9 @@
 
 using namespace std;
 
-Square::Square(int x, int y) :
-mX(x),
-mY(y)
+Square::Square(int width, int height) :
+mX(width),
+mY(height)
 {
 	CalculateArea();
 }
