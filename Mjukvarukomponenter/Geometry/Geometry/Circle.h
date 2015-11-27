@@ -2,6 +2,7 @@
 #define INCLUDED_CIRCLE
 
 #include "Shape.h"
+#include <iostream>
 
 class Circle : public Shape
 {
@@ -10,7 +11,7 @@ public:
 	~Circle();
 
 	void CalculateArea();
-	int Output();
+	void Output();
 
 private:
 	int mRadius;

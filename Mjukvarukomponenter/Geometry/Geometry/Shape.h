@@ -6,7 +6,7 @@ class Shape
 public:
 	virtual ~Shape();
 	virtual void CalculateArea() = 0;
-	virtual int Output() = 0;
+	virtual void Output() = 0;
 };
 
 #endif 

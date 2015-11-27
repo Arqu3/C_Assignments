@@ -22,7 +22,7 @@ void Container::output()
 	for (ShapeVector::size_type i = 0; i < mShapes.size(); i++)
 	{
 		mShapes[i]->CalculateArea();
-		cout << mShapes[i]->Output() << endl;
+		mShapes[i]->Output();
 	}
 }
 

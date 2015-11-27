@@ -18,7 +18,7 @@ void Triangle::CalculateArea()
 	mArea = (mBase * mHeight) / 2;
 }
 
-int Triangle::Output()
+void Triangle::Output()
 {
-	return mArea;
+	cout << "Area of triangle: " << mArea << endl;
 }

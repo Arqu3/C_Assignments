@@ -18,7 +18,7 @@ void Square::CalculateArea()
 	mArea = mX * mY;
 }
 
-int Square::Output()
+void Square::Output()
 {
-	return mArea;
+	cout << "Area of square/rectangle: " << mArea << endl;
 }

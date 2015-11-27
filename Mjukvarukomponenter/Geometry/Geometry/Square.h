@@ -2,6 +2,7 @@
 #define INCLUDED_SQUARE
 
 #include "Shape.h"
+#include <iostream>
 
 class Square : public Shape
 {
@@ -10,7 +11,7 @@ public:
 	~Square();
 
 	void CalculateArea();
-	int Output();
+	void Output();
 
 private:
 	int mX;

@@ -19,7 +19,7 @@ void Circle::CalculateArea()
 	mArea = (mRadius * mRadius) * M_PI;
 }
 
-int Circle::Output()
+void Circle::Output()
 {
-	return mArea;
+	cout << "Area of circle: " << mArea << endl;
 }

@@ -1,7 +1,4 @@
 #include "ShapeTool.h"
-#include "Square.h"
-#include "Circle.h"
-#include "Triangle.h"
 
 Shape* ShapeTool::createSquare(int width, int height)
 {

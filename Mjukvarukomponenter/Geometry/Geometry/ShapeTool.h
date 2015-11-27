@@ -1,6 +1,10 @@
 #ifndef INCLUDED_SHAPETOOL
 #define INCLUDED_SHAPETOOL
 
+#include "Square.h"
+#include "Circle.h"
+#include "Triangle.h"
+
 class Shape;
 
 struct ShapeTool

@@ -3,7 +3,6 @@
 
 #include "Shape.h"
 #include <vector>
-#include <iostream>
 
 class Container
 {

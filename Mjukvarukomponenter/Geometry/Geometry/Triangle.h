@@ -2,6 +2,7 @@
 #define INCLUDED_TRIANGLE
 
 #include "Shape.h"
+#include <iostream>
 
 class Triangle : public Shape
 {
@@ -10,7 +11,7 @@ public:
 	~Triangle();
 
 	void CalculateArea();
-	int Output();
+	void Output();
 
 private:
 	int mBase;
