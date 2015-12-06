@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Clock.h"
 #include <windows.h>
 
@@ -7,7 +6,7 @@ using namespace std;
 int main()
 {
 
-	Clock clock(0, 0, 0, 0);
+	Clock clock;
 
 	clock.setDay(2);
 	clock.setHour(23);

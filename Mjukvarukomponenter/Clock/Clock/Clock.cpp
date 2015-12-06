@@ -1,8 +1,9 @@
 #include "Clock.h"
+#include <cassert>
 
 using namespace std;
 
-Clock::Clock(double sec, int min, int hour, int day) :
+Clock::Clock(int sec, int min, int hour, int day) :
 mSec(sec),
 mMin(min),
 mHour(hour),
@@ -39,7 +40,7 @@ Clock& Clock::operator=(const Clock &clock)
 	return *this;
 }
 
-void Clock::setSecond(double s)
+void Clock::setSecond(int s)
 {
 	assert(invariant());
 	assert(s >= 0 && s <= 60);
@@ -77,6 +78,30 @@ void Clock::setDay(int day)
 	updateTime();
 	assert(mDay == day);
 	assert(invariant());
+}
+
+int Clock::getSecond() const
+{
+	assert(invariant());
+	return mSec;
+}
+
+int Clock::getMinute() const
+{
+	assert(invariant());
+	return mMin;
+}
+
+int Clock::getHour() const
+{
+	assert(invariant());
+	return mHour;
+}
+
+int Clock::getDay() const
+{
+	assert(invariant());
+	return mDay;
 }
 
 void Clock::updateTime()
@@ -119,4 +144,14 @@ void Clock::output()
 bool Clock::invariant() const
 {
 	return mSec >= 0 && mSec <= 60 && mMin >= 0 && mMin <= 60 && mHour >= 0 && mHour <= 24 && mDay >= 0;
+}
+
+bool operator==(const Clock &c0, const Clock &c1)
+{
+	return c0.getSecond() == c1.getSecond() && c0.getMinute() == c1.getMinute() && c0.getHour() == c1.getHour() && c0.getDay() == c1.getDay();
+}
+
+bool operator!=(const Clock &c0, const Clock &c1)
+{
+	return c0.getSecond() != c1.getSecond() && c0.getMinute() != c1.getMinute() && c0.getHour() != c1.getHour() && c0.getDay() != c1.getDay();
 }
