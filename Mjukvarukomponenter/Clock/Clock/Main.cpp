@@ -10,14 +10,19 @@ int main()
 
 	clock.setDay(2);
 	clock.setHour(23);
-	clock.setSecond(55);
 	clock.setMinute(59);
+	clock.setSecond(55);
 
-	clock.output();
+	cout << "Day: " << clock.getDay() << endl;
+	cout << "Hour: " << clock.getHour() << endl;
+	cout << "Minute: " << clock.getMinute() << endl;
+	cout << "Second: " << clock.getSecond() << endl;
+
+	cout << endl;
+
+	system("Pause");
 
 	bool done = false;
-	bool hasInput = false;
-	int input = 0;
 
 	while (!done)
 	{
