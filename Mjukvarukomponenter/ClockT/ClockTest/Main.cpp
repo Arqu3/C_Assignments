@@ -1,6 +1,6 @@
 #include "ClockTest.h"
-#include <iostream>
 #include <Windows.h>
+#include <iostream>
 
 using namespace std;
 
