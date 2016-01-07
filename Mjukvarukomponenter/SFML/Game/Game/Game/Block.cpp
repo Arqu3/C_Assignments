@@ -7,7 +7,8 @@ mPosition(position),
 mRectangle(rectangle),
 mHealth(1),
 mScore(1),
-mIsAlive(true)
+mIsAlive(true),
+mDamage(1)
 {
 	if (!mTexture.loadFromFile("BlockTexture1.png"))
 	{
@@ -24,6 +25,7 @@ Block::~Block()
 void Block::update(EntityVector &entities)
 {
 	move();
+	visibilityCheck();
 }
 
 void Block::draw(sf::RenderWindow &window)
@@ -41,6 +43,14 @@ void Block::move()
 
 	mRectangle.left = mPosition.x;
 	mRectangle.top = mPosition.y;
+}
+
+void Block::visibilityCheck()
+{
+	if (mPosition.y > 600)
+	{
+		mIsAlive = false;
+	}
 }
 
 bool Block::isAlive()
@@ -66,4 +76,9 @@ sf::FloatRect Block::getRectangle()
 int Block::getScore()
 {
 	return mScore;
+}
+
+int Block::getDamage()
+{
+	return mDamage;
 }

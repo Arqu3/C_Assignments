@@ -6,9 +6,12 @@ const int screenW = 800;
 const int screenH = 600;
 
 Game::Game() :
-mEntities()
+mEntities(),
+bSpawnInterval(250),
+bSpawnTimer(0)
 {
 	loadPlayer();
+	srand(time(NULL));
 }
 
 Game::~Game()
@@ -20,7 +23,9 @@ void Game::run()
 {
 	sf::RenderWindow window(sf::VideoMode(screenW, screenH), "Game");
 
-	while (window.isOpen())
+	window.setMouseCursorVisible(false);
+
+	while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -29,8 +34,10 @@ void Game::run()
 				window.close();
 		}
 
+
 		window.clear(sf::Color::Black);
 
+		mPlayer->updateMouse(window);
 		update();
 		draw(window);
 
@@ -49,6 +56,8 @@ void Game::update()
 		Entity *entity = *i;
 		entity->update(mEntities);
 	}
+
+	addBlocks();
 }
 
 void Game::draw(sf::RenderWindow &window)
@@ -58,6 +67,10 @@ void Game::draw(sf::RenderWindow &window)
 		Entity *entity = *i;
 		entity->draw(window);
 	}
+
+	//Draw player score and lives last
+	mPlayer->drawScore(window);
+	mPlayer->drawHealth(window);
 }
 
 void Game::detectCollisions()
@@ -67,6 +80,7 @@ void Game::detectCollisions()
 		Entity *entity = *i;
 		if (mPlayer->getRectangle().intersects(entity->getRectangle()) && mPlayer != entity)
 		{
+			mPlayer->addScore(entity->getScore());
 			entity->setDead();
 		}
 	}
@@ -94,6 +108,23 @@ void Game::removeDeadEntities()
 	mEntities = entities;
 }
 
+void Game::addBlocks()
+{
+	int posX = rand() % screenW - 32;
+	sf::Vector2f spawnPos(posX, -40);
+
+	bSpawnTimer += 0.05f;
+	if (bSpawnTimer > bSpawnInterval)
+	{
+		bSpawnTimer = 0.0f;
+	}
+
+	if (bSpawnTimer == 0.0f)
+	{
+		mEntities.push_back(new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)));
+	}
+}
+
 void Game::loadPlayer()
 {
 	while (!mEntities.empty())
@@ -102,7 +133,4 @@ void Game::loadPlayer()
 	}
 	mPlayer = new Player(sf::Vector2f(screenW / 2 - 32, screenH -50), sf::FloatRect(0, 0, 0, 0));
 	mEntities.push_back(mPlayer);
-
-	Block *block1 = new Block(sf::Vector2f(screenW / 2 - 16, 50), sf::FloatRect(0, 0, 0, 0));
-	mEntities.push_back(block1);
 }

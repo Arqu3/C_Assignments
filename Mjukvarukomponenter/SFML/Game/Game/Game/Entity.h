@@ -20,6 +20,7 @@ public:
 	virtual sf::Vector2f getPosition() = 0;
 	virtual sf::FloatRect getRectangle() = 0;
 	virtual int getScore() = 0;
+	virtual int getDamage() = 0;
 };
 
 #endif

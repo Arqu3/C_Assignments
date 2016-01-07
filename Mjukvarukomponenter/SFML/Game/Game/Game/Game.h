@@ -7,6 +7,7 @@
 
 #include "SFML\Graphics.hpp"
 #include "SFML\Window.hpp"
+#include <time.h>
 
 class Game
 {
@@ -23,6 +24,10 @@ private:
 	void draw(sf::RenderWindow &window);
 	void detectCollisions();
 	void removeDeadEntities();
+
+	void addBlocks();
+	float bSpawnInterval;
+	float bSpawnTimer;
 
 	void loadPlayer();
 	Player *mPlayer;
