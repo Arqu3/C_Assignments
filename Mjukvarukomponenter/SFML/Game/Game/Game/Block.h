@@ -20,6 +20,7 @@ public:
 	sf::FloatRect getRectangle();
 	int getScore();
 	int getDamage();
+	sf::Sprite getSprite();
 
 private:
 	void move();

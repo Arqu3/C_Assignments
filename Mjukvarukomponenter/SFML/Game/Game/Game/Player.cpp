@@ -128,6 +128,11 @@ int Player::getDamage()
 	return mDamage;
 }
 
+sf::Sprite Player::getSprite()
+{
+	return mSprite;
+}
+
 void Player::addScore(int num)
 {
 	mScore += num;

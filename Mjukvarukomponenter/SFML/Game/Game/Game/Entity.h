@@ -21,6 +21,7 @@ public:
 	virtual sf::FloatRect getRectangle() = 0;
 	virtual int getScore() = 0;
 	virtual int getDamage() = 0;
+	virtual sf::Sprite getSprite() = 0;
 };
 
 #endif

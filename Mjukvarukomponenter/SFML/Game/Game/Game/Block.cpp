@@ -15,6 +15,7 @@ mDamage(1)
 		cout << "Could not load Block1 texture" << endl;
 	}
 	mSprite.setTexture(mTexture);
+	//mSprite.setColor(sf::Color::Blue);
 }
 
 Block::~Block()
@@ -81,4 +82,9 @@ int Block::getScore()
 int Block::getDamage()
 {
 	return mDamage;
+}
+
+sf::Sprite Block::getSprite()
+{
+	return mSprite;
 }

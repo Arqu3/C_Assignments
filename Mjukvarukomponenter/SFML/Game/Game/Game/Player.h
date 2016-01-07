@@ -21,6 +21,7 @@ public:
 	sf::FloatRect getRectangle();
 	int getScore();
 	int getDamage();
+	sf::Sprite getSprite();
 
 	void addScore(int num);
 	void drawScore(sf::RenderWindow &window);

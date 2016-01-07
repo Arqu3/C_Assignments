@@ -121,7 +121,8 @@ void Game::addBlocks()
 
 	if (bSpawnTimer == 0.0f)
 	{
-		mEntities.push_back(new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)));
+		//mEntities.push_back(new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)));
+		mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Damage, (new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)))));
 	}
 }
 
