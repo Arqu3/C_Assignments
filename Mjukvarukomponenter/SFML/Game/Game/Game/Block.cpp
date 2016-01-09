@@ -7,7 +7,7 @@ mPosition(position),
 mRectangle(rectangle),
 mHealth(1),
 mScore(1),
-mSpeed(250),
+mSpeed(275),
 mIsAlive(true),
 mDamage(1)
 {

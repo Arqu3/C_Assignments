@@ -133,15 +133,15 @@ void Game::addBlocks()
 	int random;
 
 	//Difficuly handling based on player score
-	if (mPlayer->getScore() > 150 && mPlayer->getScore() <= 300)
+	if (mPlayer->getScore() > 80 && mPlayer->getScore() <= 175)
 	{
 		difficulty = 1;
 	}
-	if (mPlayer->getScore() > 300 && mPlayer->getScore() <= 500)
+	if (mPlayer->getScore() > 175 && mPlayer->getScore() <= 270)
 	{
 		difficulty = 2;
 	}
-	if (mPlayer->getScore() > 500)
+	if (mPlayer->getScore() > 270)
 	{
 		difficulty = 3;
 	}
@@ -177,7 +177,7 @@ void Game::addBlocks()
 		if (difficulty == 3)
 		{
 			//Spawn enemies 50% faster at difficulty 3
-			bSpawnInterval = 83.5f;
+			bSpawnInterval = 90.0f;
 		}
 
 	    random = rand() % 10 + 1;
