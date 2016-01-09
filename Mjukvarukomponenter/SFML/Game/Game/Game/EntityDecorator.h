@@ -28,6 +28,8 @@ public:
 	int getScore();
 	int getDamage();
 	sf::Sprite getSprite();
+	float getSpeed();
+	float setSpeed(float value);
 
 private:
 	Entity *mEntity;

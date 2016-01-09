@@ -22,6 +22,8 @@ public:
 	virtual int getScore() = 0;
 	virtual int getDamage() = 0;
 	virtual sf::Sprite getSprite() = 0;
+	virtual float getSpeed() = 0;
+	virtual float setSpeed(float value) = 0;
 };
 
 #endif

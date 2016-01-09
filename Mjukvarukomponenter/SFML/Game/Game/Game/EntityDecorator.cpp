@@ -6,11 +6,15 @@ EntityDecorator::EntityDecorator(Type type, Entity *entity):
 mEntity(entity),
 mType(type)
 {
+	//Set sprite color depending on type
 	mSprite = mEntity->getSprite();
 	switch (mType)
 	{
 	case Type::Fast:
 		mSprite.setColor(sf::Color::Blue);
+
+		//Also set speed if type is fast
+		setSpeed(mEntity->getSpeed() * 5.0f);
 		break;
 
 	case Type::Damage:
@@ -29,7 +33,7 @@ mType(type)
 
 EntityDecorator::~EntityDecorator()
 {
-
+	delete mEntity;
 }
 
 void EntityDecorator::update(float deltaTime)
@@ -39,6 +43,7 @@ void EntityDecorator::update(float deltaTime)
 
 void EntityDecorator::draw(sf::RenderWindow &window)
 {
+	//Draw new sprite (new color)
 	window.draw(mSprite);
 	mSprite.setPosition(mEntity->getPosition());
 }
@@ -65,17 +70,15 @@ sf::FloatRect EntityDecorator::getRectangle()
 
 int EntityDecorator::getScore()
 {
+	//All specials give bonus score
 	switch (mType)
 	{
-	case Type::Damage:
-		return mEntity->getScore() + 1;
-		break;
-
-	case Type::Fast:
+	default:
 		return mEntity->getScore() + 1;
 		break;
 
 	case Type::Score:
+		//Score type enemy gives 5 times regular score
 		return mEntity->getScore() + 4;
 		break;
 	}
@@ -85,8 +88,13 @@ int EntityDecorator::getDamage()
 {
 	switch (mType)
 	{
+	default:
+		return mEntity->getDamage();
+		break;
+
 	case Type::Damage:
-		return mEntity->getDamage() + 1;
+		//Damage type deals double damage to player
+		return mEntity->getDamage() * 2;
 		break;
 	}
 }
@@ -94,4 +102,14 @@ int EntityDecorator::getDamage()
 sf::Sprite EntityDecorator::getSprite()
 {
 	return mSprite;
+}
+
+float EntityDecorator::getSpeed()
+{
+	return mEntity->getSpeed();
+}
+
+float EntityDecorator::setSpeed(float value)
+{
+	return mEntity->setSpeed(value);
 }

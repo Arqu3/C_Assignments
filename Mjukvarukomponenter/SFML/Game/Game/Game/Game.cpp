@@ -8,7 +8,8 @@ const int screenH = 600;
 Game::Game() :
 mEntities(),
 bSpawnInterval(250),
-bSpawnTimer(0)
+bSpawnTimer(0),
+difficulty(0)
 {
 	loadPlayer();
 	srand(time(NULL));
@@ -25,7 +26,7 @@ void Game::run()
 
 	window.setMouseCursorVisible(false);
 
-	while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	while (window.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && mPlayer->isAlive())
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -41,6 +42,7 @@ void Game::run()
 
 		mPlayer->updateMouse(window);
 		update(deltaTime);
+		visibilityCheck();
 		draw(window);
 
 		detectCollisions();
@@ -72,7 +74,7 @@ void Game::draw(sf::RenderWindow &window)
 		entity->draw(window);
 	}
 
-	//Draw player score and lives last
+	//Draw player score and lives last (text overlaps blocks, not the other way around)
 	mPlayer->drawScore(window);
 	mPlayer->drawHealth(window);
 }
@@ -112,13 +114,43 @@ void Game::removeDeadEntities()
 	mEntities = entities;
 }
 
+void Game::visibilityCheck()
+{
+	for (EntityVector::iterator i = mEntities.begin(); i != mEntities.end(); i++)
+	{
+		Entity *entity = *i;
+		if (entity->getPosition().y > 600)
+		{
+			mPlayer->takeDamage(entity->getDamage());
+			entity->setDead();
+		}
+	}
+}
+
 void Game::addBlocks()
 {
-	int posX = rand() % screenW - 32;
+	int spawnSpecial;
+	int random;
+
+	//Difficuly handling based on player score
+	if (mPlayer->getScore() > 150 && mPlayer->getScore() <= 300)
+	{
+		difficulty = 1;
+	}
+	if (mPlayer->getScore() > 300 && mPlayer->getScore() <= 500)
+	{
+		difficulty = 2;
+	}
+	if (mPlayer->getScore() > 500)
+	{
+		difficulty = 3;
+	}
+
+	int posX = rand() % screenW;
 	sf::Vector2f spawnPos(posX, -40);
 	sf::FloatRect spawnRect(spawnPos, sf::Vector2f(0, 0));
 
-	bSpawnTimer += 0.05f;
+	bSpawnTimer += 0.1f;
 	if (bSpawnTimer > bSpawnInterval)
 	{
 		bSpawnTimer = 0.0f;
@@ -126,9 +158,51 @@ void Game::addBlocks()
 
 	if (bSpawnTimer == 0.0f)
 	{
-		mEntities.push_back(new Block(spawnPos, spawnRect));
-		//mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Damage, (new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)))));
-		cout << mEntities.size() << endl;
+		//Change how blocks spawn depending on difficulty
+		if (difficulty == 0)
+		{
+			spawnSpecial = rand() % 2 + 1;
+		}
+		else if (difficulty > 0)
+		{
+			spawnSpecial = 1;
+		}
+
+		if (difficulty == 2)
+		{
+			//Spawn enemies 33% faster at difficulty 2
+			bSpawnInterval = 167;
+		}
+
+		if (difficulty == 3)
+		{
+			//Spawn enemies 50% faster at difficulty 3
+			bSpawnInterval = 83.5f;
+		}
+
+	    random = rand() % 10 + 1;
+
+		//Add special blocks
+		if (spawnSpecial < 2)
+		{
+			if (random == 10)
+			{
+				mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Score, (new Block(spawnPos, spawnRect))));
+			}
+			if (random > 5 && random < 10)
+			{
+				mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Damage, (new Block(spawnPos, spawnRect))));
+			}
+			if (random > 0 && random < 8)
+			{
+				mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Fast, (new Block(spawnPos, spawnRect))));
+			}
+		}
+		//Add regular blocks
+		else
+		{
+			mEntities.push_back(new Block(spawnPos, spawnRect));
+		}
 	}
 }
 

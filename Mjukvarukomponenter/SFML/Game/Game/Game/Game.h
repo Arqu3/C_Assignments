@@ -25,6 +25,7 @@ private:
 	void draw(sf::RenderWindow &window);
 	void detectCollisions();
 	void removeDeadEntities();
+	void visibilityCheck();
 
 	void addBlocks();
 	float bSpawnInterval;
@@ -34,6 +35,7 @@ private:
 	Player *mPlayer;
 
 	sf::Clock deltaClock;
+	int difficulty;
 
 	void destroy();
 };

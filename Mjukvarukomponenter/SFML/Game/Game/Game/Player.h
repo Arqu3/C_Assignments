@@ -22,12 +22,16 @@ public:
 	int getScore();
 	int getDamage();
 	sf::Sprite getSprite();
+	float getSpeed();
+	float setSpeed(float value);
 
 	void addScore(int num);
 	void drawScore(sf::RenderWindow &window);
 	void drawHealth(sf::RenderWindow &window);
 
 	void updateMouse(sf::RenderWindow &window);
+
+	void takeDamage(int damage);
 
 private:
 	void updateRectangle();

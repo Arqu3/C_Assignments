@@ -7,6 +7,7 @@ mPosition(position),
 mRectangle(rectangle),
 mHealth(1),
 mScore(1),
+mSpeed(250),
 mIsAlive(true),
 mDamage(1)
 {
@@ -15,6 +16,7 @@ mDamage(1)
 		cout << "Could not load Block1 texture" << endl;
 	}
 	mSprite.setTexture(mTexture);
+	mSprite.setColor(sf::Color::Green);
 }
 
 Block::~Block()
@@ -25,7 +27,12 @@ Block::~Block()
 void Block::update(float deltaTime)
 {
 	move(deltaTime);
-	visibilityCheck();
+
+	//Fix position X if spawned outside screen
+	if (mPosition.x > 800 - mRectangle.width)
+	{
+		mPosition.x = 800 - mRectangle.width;
+	}
 }
 
 void Block::draw(sf::RenderWindow &window)
@@ -36,22 +43,13 @@ void Block::draw(sf::RenderWindow &window)
 
 void Block::move(float deltaTime)
 {
-
-	mPosition.y += 100 * deltaTime;
+	mPosition.y += mSpeed * deltaTime;
 
 	mRectangle.height = mSprite.getGlobalBounds().height;
 	mRectangle.width = mSprite.getGlobalBounds().width;
 
 	mRectangle.left = mPosition.x;
 	mRectangle.top = mPosition.y;
-}
-
-void Block::visibilityCheck()
-{
-	if (mPosition.y > 600)
-	{
-		mIsAlive = false;
-	}
 }
 
 bool Block::isAlive()
@@ -87,4 +85,14 @@ int Block::getDamage()
 sf::Sprite Block::getSprite()
 {
 	return mSprite;
+}
+
+float Block::getSpeed()
+{
+	return mSpeed;
+}
+
+float Block::setSpeed(float value)
+{
+	return mSpeed = value;
 }

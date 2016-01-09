@@ -21,16 +21,18 @@ public:
 	int getScore();
 	int getDamage();
 	sf::Sprite getSprite();
+	float getSpeed();
+	float setSpeed(float value);
 
 private:
 	void move(float deltaTime);
-	void visibilityCheck();
 
 	sf::Vector2f mPosition;
 	sf::FloatRect mRectangle;
 	int mScore;
 	int mHealth;
 	int mDamage;
+	float mSpeed;
 	bool mIsAlive;
 	sf::Sprite mSprite;
 	sf::Texture mTexture;

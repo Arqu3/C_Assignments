@@ -7,7 +7,7 @@ mPosition(position),
 mRectangle(rectangle),
 mIsAlive(true),
 mScore(0),
-mHealth(5),
+mHealth(10),
 mDamage(0)
 {
 	if (!mTexture.loadFromFile("PlayerTexture.png"))
@@ -32,10 +32,12 @@ Player::~Player()
 void Player::update(float deltaTime)
 {
 	updateRectangle();
+	aliveCheck();
 }
 
 void Player::updateMouse(sf::RenderWindow &window)
 {
+	//Restrict mouse to current window
 	if (mMouse.getPosition(window).x < 0)
 	{
 		mMouse.setPosition(sf::Vector2i(1, mPosition.y), window);
@@ -56,6 +58,7 @@ void Player::updateMouse(sf::RenderWindow &window)
 		mMouse.setPosition(sf::Vector2i(mPosition.x, 11), window);
 	}
 
+	//Set player X position to mouse position X
 	mPosition.x = mMouse.getPosition(window).x;
 }
 
@@ -88,6 +91,11 @@ void Player::updateRectangle()
 
 	mRectangle.left = mPosition.x;
 	mRectangle.top = mPosition.y;
+}
+
+void Player::takeDamage(int damage)
+{
+	mHealth -= damage;
 }
 
 void Player::aliveCheck()
@@ -131,6 +139,16 @@ int Player::getDamage()
 sf::Sprite Player::getSprite()
 {
 	return mSprite;
+}
+
+float Player::getSpeed()
+{
+	return 0.0f;
+}
+
+float Player::setSpeed(float value)
+{
+	return 0.0f;
 }
 
 void Player::addScore(int num)
