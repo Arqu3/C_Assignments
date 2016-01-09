@@ -12,7 +12,7 @@ public:
 	Entity();
 	virtual ~Entity();
 
-	virtual void update(EntityVector &entities) = 0;
+	virtual void update(float deltaTime) = 0;
 	virtual void draw(sf::RenderWindow &window) = 0;
 	virtual bool isAlive() = 0;
 	virtual void setDead() = 0;

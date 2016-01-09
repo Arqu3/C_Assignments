@@ -15,7 +15,6 @@ mDamage(1)
 		cout << "Could not load Block1 texture" << endl;
 	}
 	mSprite.setTexture(mTexture);
-	//mSprite.setColor(sf::Color::Blue);
 }
 
 Block::~Block()
@@ -23,9 +22,9 @@ Block::~Block()
 
 }
 
-void Block::update(EntityVector &entities)
+void Block::update(float deltaTime)
 {
-	move();
+	move(deltaTime);
 	visibilityCheck();
 }
 
@@ -35,9 +34,10 @@ void Block::draw(sf::RenderWindow &window)
 	mSprite.setPosition(mPosition);
 }
 
-void Block::move()
+void Block::move(float deltaTime)
 {
-	mPosition.y += 0.1f;
+
+	mPosition.y += 100 * deltaTime;
 
 	mRectangle.height = mSprite.getGlobalBounds().height;
 	mRectangle.width = mSprite.getGlobalBounds().width;

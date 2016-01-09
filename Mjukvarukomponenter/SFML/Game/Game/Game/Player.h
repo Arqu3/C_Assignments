@@ -11,7 +11,7 @@ public:
 	Player(sf::Vector2f &position, sf::FloatRect &rectangle);
 	~Player();
 
-	void update(EntityVector &entities);
+	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 
 	bool isAlive();

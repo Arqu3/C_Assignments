@@ -21,7 +21,7 @@ private:
 	typedef std::vector<Entity*> EntityVector;
 	EntityVector mEntities;
 
-	void update();
+	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 	void detectCollisions();
 	void removeDeadEntities();
@@ -32,6 +32,10 @@ private:
 
 	void loadPlayer();
 	Player *mPlayer;
+
+	sf::Clock deltaClock;
+
+	void destroy();
 };
 
 #endif

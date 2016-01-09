@@ -34,30 +34,34 @@ void Game::run()
 				window.close();
 		}
 
-
 		window.clear(sf::Color::Black);
 
+		sf::Time elapsed = deltaClock.getElapsedTime();
+		float deltaTime = elapsed.asSeconds();
+
 		mPlayer->updateMouse(window);
-		update();
+		update(deltaTime);
 		draw(window);
 
 		detectCollisions();
 		removeDeadEntities();
 
+		deltaClock.restart();
+
 		window.display();
 	}
+	destroy();
 }
 
-void Game::update()
+void Game::update(float deltaTime)
 {
-	EntityVector entities(mEntities);
+	addBlocks();
+
 	for (EntityVector::iterator i = mEntities.begin(); i != mEntities.end(); i++)
 	{
 		Entity *entity = *i;
-		entity->update(mEntities);
+		entity->update(deltaTime);
 	}
-
-	addBlocks();
 }
 
 void Game::draw(sf::RenderWindow &window)
@@ -112,6 +116,7 @@ void Game::addBlocks()
 {
 	int posX = rand() % screenW - 32;
 	sf::Vector2f spawnPos(posX, -40);
+	sf::FloatRect spawnRect(spawnPos, sf::Vector2f(0, 0));
 
 	bSpawnTimer += 0.05f;
 	if (bSpawnTimer > bSpawnInterval)
@@ -121,8 +126,9 @@ void Game::addBlocks()
 
 	if (bSpawnTimer == 0.0f)
 	{
-		//mEntities.push_back(new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)));
-		mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Damage, (new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)))));
+		mEntities.push_back(new Block(spawnPos, spawnRect));
+		//mEntities.push_back(new EntityDecorator(EntityDecorator::Type::Damage, (new Block(spawnPos, sf::FloatRect(0, 0, 0, 0)))));
+		cout << mEntities.size() << endl;
 	}
 }
 
@@ -134,4 +140,13 @@ void Game::loadPlayer()
 	}
 	mPlayer = new Player(sf::Vector2f(screenW / 2 - 32, screenH -50), sf::FloatRect(0, 0, 0, 0));
 	mEntities.push_back(mPlayer);
+}
+
+void Game::destroy()
+{
+	while (!mEntities.empty())
+	{
+		delete mEntities.back();
+		mEntities.pop_back();
+	}
 }

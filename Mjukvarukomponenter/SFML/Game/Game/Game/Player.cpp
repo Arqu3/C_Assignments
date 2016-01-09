@@ -29,7 +29,7 @@ Player::~Player()
 
 }
 
-void Player::update(EntityVector &entities)
+void Player::update(float deltaTime)
 {
 	updateRectangle();
 }

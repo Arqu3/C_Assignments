@@ -10,7 +10,7 @@ public:
 	Block(sf::Vector2f &position, sf::FloatRect &rectangle);
 	~Block();
 
-	void update(EntityVector &entities);
+	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 
 	bool isAlive();
@@ -23,7 +23,7 @@ public:
 	sf::Sprite getSprite();
 
 private:
-	void move();
+	void move(float deltaTime);
 	void visibilityCheck();
 
 	sf::Vector2f mPosition;

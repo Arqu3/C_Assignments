@@ -2,6 +2,7 @@
 #define INCLUDED_ENTITYDECORATOR
 
 #include "Entity.h"
+#include <iostream>
 
 class EntityDecorator : public Entity
 {
@@ -17,7 +18,7 @@ public:
 	EntityDecorator(Type type, Entity *entity);
 	~EntityDecorator();
 
-	void update(EntityVector &entities);
+	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 	bool isAlive();
 	void setDead();
@@ -31,6 +32,7 @@ public:
 private:
 	Entity *mEntity;
 	Type mType;
+	sf::Sprite mSprite;
 };
 
 #endif

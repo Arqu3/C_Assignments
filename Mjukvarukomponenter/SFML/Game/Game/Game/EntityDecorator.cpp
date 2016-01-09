@@ -6,10 +6,23 @@ EntityDecorator::EntityDecorator(Type type, Entity *entity):
 mEntity(entity),
 mType(type)
 {
+	mSprite = mEntity->getSprite();
 	switch (mType)
 	{
+	case Type::Fast:
+		mSprite.setColor(sf::Color::Blue);
+		break;
+
 	case Type::Damage:
-		getSprite().setColor(sf::Color::Blue);
+		mSprite.setColor(sf::Color::Red);
+		break;
+
+	case Type::Score:
+		mSprite.setColor(sf::Color::Yellow);
+		break;
+
+	case Type::Horizontal:
+		mSprite.setColor(sf::Color::Green);
 		break;
 	}
 }
@@ -19,15 +32,15 @@ EntityDecorator::~EntityDecorator()
 
 }
 
-void EntityDecorator::update(EntityVector &entities)
+void EntityDecorator::update(float deltaTime)
 {
-	return mEntity->update(entities);
+	return mEntity->update(deltaTime);
 }
 
 void EntityDecorator::draw(sf::RenderWindow &window)
 {
-
-	return mEntity->draw(window);
+	window.draw(mSprite);
+	mSprite.setPosition(mEntity->getPosition());
 }
 
 bool EntityDecorator::isAlive()
@@ -55,17 +68,30 @@ int EntityDecorator::getScore()
 	switch (mType)
 	{
 	case Type::Damage:
-		return mEntity->getScore() + 3;
+		return mEntity->getScore() + 1;
+		break;
+
+	case Type::Fast:
+		return mEntity->getScore() + 1;
+		break;
+
+	case Type::Score:
+		return mEntity->getScore() + 4;
 		break;
 	}
 }
 
 int EntityDecorator::getDamage()
 {
-	return mEntity->getDamage() + 1;
+	switch (mType)
+	{
+	case Type::Damage:
+		return mEntity->getDamage() + 1;
+		break;
+	}
 }
 
 sf::Sprite EntityDecorator::getSprite()
 {
-	return mEntity->getSprite();
+	return mSprite;
 }
