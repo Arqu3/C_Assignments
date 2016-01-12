@@ -1,7 +1,6 @@
 #ifndef INCLUDED_GAME
 #define INCLUDED_GAME
 
-#include "Entity.h"
 #include "Player.h"
 #include "Block.h"
 #include "EntityDecorator.h"

@@ -11,8 +11,7 @@ public:
 	{
 		Fast,
 		Damage,
-		Score,
-		Horizontal
+		Score
 	};
 
 	EntityDecorator(Type type, Entity *entity);

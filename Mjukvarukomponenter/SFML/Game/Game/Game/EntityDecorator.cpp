@@ -24,10 +24,6 @@ mType(type)
 	case Type::Score:
 		mSprite.setColor(sf::Color::Yellow);
 		break;
-
-	case Type::Horizontal:
-		mSprite.setColor(sf::Color::Green);
-		break;
 	}
 }
 
