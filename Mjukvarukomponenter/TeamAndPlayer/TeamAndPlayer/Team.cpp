@@ -7,12 +7,12 @@ mName(name)
 {
 }
 
-void Team::setName(const string &name)
+void Team::setName(string &name)
 {
 	mName = name;
 }
 
-const string Team::getName() const
+ string Team::getName() 
 {
 	return mName;
 }

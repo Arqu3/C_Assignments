@@ -7,12 +7,12 @@ mName(name)
 {
 }
 
-void Player::setName(const string &name)
+void Player::setName(string &name)
 {
 	mName = name;
 }
 
-const string Player::getName() const
+string Player::getName() 
 {
 	return mName;
 }
