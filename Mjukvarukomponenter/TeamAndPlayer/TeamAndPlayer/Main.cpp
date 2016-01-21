@@ -28,16 +28,16 @@ int main()
 	typedef Connections::Teams Teams;
 	typedef Connections::Players Players;
 
-	const Teams &teams = connections.getTeams();
+	Teams &teams = connections.getTeams();
 
-	for (Teams::const_iterator ti = teams.begin(); ti != teams.end(); ti++)
+	for (Teams::iterator ti = teams.begin(); ti != teams.end(); ti++)
 	{
 		Team *team = *ti;
 		cout << team->getName() << endl;
 
-		const Players &players = connections.getPlayers(team);
+		 Players &players = connections.getPlayers(team);
 
-		for (Players::const_iterator pi = players.begin(); pi != players.end(); pi++)
+		for (Players::iterator pi = players.begin(); pi != players.end(); pi++)
 		{
 			Player *player = *pi;
 			cout << " " << player->getName() << endl;

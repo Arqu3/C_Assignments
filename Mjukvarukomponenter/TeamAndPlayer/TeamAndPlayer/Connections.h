@@ -33,11 +33,11 @@ private:
 	typedef std::map<Player*, Teams> PlayerToTeams;
 
 	Connections();
-	Connections(const Connections &connections);
+	Connections(Connections &connections);
 	~Connections();
 
 	void internalClear();
-	Connections& operator=(const Connections &conncetions);
+	Connections& operator=(Connections &conncetions);
 
 	Teams mTeams;
 	Players mPlayers;

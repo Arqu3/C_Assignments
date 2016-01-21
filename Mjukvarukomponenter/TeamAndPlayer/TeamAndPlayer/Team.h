@@ -7,8 +7,8 @@ class Team
 {
 public:
 	Team(const std::string &name);
-	void setName(const std::string &name);
-	const std::string getName() const;
+	void setName(std::string &name);
+	std::string getName();
 
 private:
 	std::string mName;
